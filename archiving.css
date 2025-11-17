@@ -1,0 +1,255 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@300;400;500&display=swap");
+
+.page-header {
+  text-align: center;
+  padding: 3.5rem 1rem 2rem;
+  position: relative; /* <-- important for absolute positioning */
+}
+
+.back-desktop {
+  position: absolute;
+  top: rem; /* ⬇ move this value to push button down */
+  left: 1rem;
+
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid #6078cf;
+  background: #f3f4f0;
+  color: #2e4185;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* optional hover state */
+.back-desktop:hover {
+  background: #e4e6df;
+}
+
+body {
+  margin: 0;
+  background: #eff1e8;
+  color: #2e4185;
+  font-family: "Inter", sans-serif;
+}
+
+/* ===== Header ===== */
+.page-header {
+  text-align: center;
+  padding: 1rem 1rem 2rem;
+  border-bottom: 3px dotted #eee;
+}
+
+.page-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.3rem;
+  margin-top: 4.5rem;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.subtitle {
+  color: #2e4185;
+  font-size: 1rem;
+}
+
+.concept-text {
+  font-size: 0.9rem;
+  color: #6078cf;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0.8rem auto 0;
+  line-height: 1.3;
+}
+
+/* ===== Top-level mode buttons ===== */
+
+.archive-switch {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 1.5rem 0 0.3rem;
+}
+
+.titlebutton {
+  position: relative; /* ← add this line */
+  font-size: 0.95rem;
+  color: #2e4185;
+  border-radius: 999px;
+  border: 0.5px solid #6078cf;
+  background: #d0d2cb;
+  padding: 0.4rem 1.8rem;
+  line-height: 1.8;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+/* Hover tooltip for buttons that have data-tooltip */
+.titlebutton[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 100%;
+  top: 115%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: #9eade5;
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+}
+
+.titlebutton[data-tooltip]:hover::after {
+  opacity: 1;
+}
+
+.titlebutton--active {
+  background: #f3f4f0;
+  box-shadow: 0 0 0 1px #6078cf;
+}
+
+/* ===== Sections (docs vs dataviz) ===== */
+
+.archive-section {
+  display: none;
+}
+
+.archive-section.active {
+  display: block;
+}
+
+/* Arrow that visually links the active titlebutton to its subtabs */
+.section-arrow {
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #5c80ff;
+  margin: 1rem auto 1.5rem;
+}
+
+/* ===== Subtabs ===== */
+
+.subtabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0 0 2.5rem;
+}
+
+.tab {
+  border: 1px solid #6078cf;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #2e4185;
+  font-size: 0.9rem;
+  padding: 0.35rem 1.1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tab:hover {
+  border-color: #2e4185;
+  color: #003cff;
+}
+
+.tab.active {
+  background: #576dbd;
+  color: #ffffff;
+  border-color: #2e4185;
+}
+
+/* ===== Docs Grid ===== */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 2fr));
+  gap: 2rem;
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 0 2rem 5rem;
+}
+
+/* Stamp-style card */
+.card {
+  position: relative;
+  z-index: 0;
+  padding: 1rem;
+  border: 3px dotted #6d88e7; /* perforated edge */
+  border-radius: 18px;
+  background: transparent;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden; /* IMPORTANT: allow the bite to stick out */
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.24);
+}
+
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: line-through;
+}
+
+.card-link:hover {
+  text-decoration: dashed;
+}
+
+.thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
+  background-color: #98a3b7;
+}
+
+.info {
+  padding: 1rem;
+}
+
+.info h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  margin: 0 0 0.3rem;
+}
+
+.info .meta {
+  color: #5d6a96;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* ===== Data Visualization panel ===== */
+
+.dataviz-panel {
+  max-width: 700px;
+  margin: 0 auto 4rem;
+  padding: 1.5rem 2rem 2rem;
+  border-radius: 12px;
+  border: 2px dashed #6078cf;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+#datavizCanvas {
+  width: 100%;
+  max-height: 360px;
+}
+
+.dataviz-note {
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  color: #4a5694;
+  font-style: italic;
+  text-align: center;
+}

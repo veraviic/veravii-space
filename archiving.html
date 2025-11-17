@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archive of Continuations</title>
+    <link rel="stylesheet" href="archiving.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <header class="page-header">
+      <!-- NEW: back to desktop button -->
+      <button class="back-desktop" onclick="window.location.href='index.html'">
+        ← Back to Desktop
+      </button>
+
+      <h1>Archive Room / 档案收纳室</h1>
+      <p class="subtitle">Objects · Writings · Reflections</p>
+      <p class="concept-text">* The current, for the past, for the future *</p>
+    </header>
+
+    <!-- Top-level mode switch -->
+    <section class="archive-switch">
+      <button class="titlebutton titlebutton--active" data-section="docs">
+        Documentations
+      </button>
+      <button
+        class="titlebutton"
+        data-section="dataviz"
+        data-tooltip="Generated based on the documentations and their tabs"
+      >
+        Data Visualizations
+      </button>
+    </section>
+
+    <!-- ========== DOCUMENTATIONS SECTION ========== -->
+    <section
+      class="archive-section archive-section--docs active"
+      data-section="docs"
+    >
+      <!-- Arrow from title button to subtabs -->
+      <div class="section-arrow"></div>
+
+      <!-- Docs subtabs -->
+      <nav class="subtabs subtabs--docs">
+        <button class="tab active" data-filter="all">All</button>
+        <button class="tab" data-filter="writing">Writing</button>
+        <button class="tab" data-filter="reflection">Reflection</button>
+        <button class="tab" data-filter="object">Object</button>
+        <button class="tab" data-filter="memory">Memory</button>
+        <button class="tab" data-filter="future">Future</button>
+      </nav>
+
+      <!-- Grid of documentation cards -->
+      <main class="grid">
+        <article class="card" data-tags="reflection,object">
+          <a href="posts/post.html" class="card-link">
+            <div
+              class="thumb"
+              style="background-image: url('droom-calculator.webp')"
+            ></div>
+            <div class="info">
+              <h2>The Weight of Small Machines</h2>
+              <p class="meta">Oct 2025 · Reflection</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="card" data-tags="writing,future">
+          <a href="posts/on-archiving-the-future.html" class="card-link">
+            <div
+              class="thumb"
+              style="background-image: url('droom-clock.webp')"
+            ></div>
+            <div class="info">
+              <h2>On Archiving the Future</h2>
+              <p class="meta">Nov 2025 · Writing / Speculation</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="card" data-tags="object,memory">
+          <a href="posts/notes-on-a-small-object.html" class="card-link">
+            <div
+              class="thumb"
+              style="background-image: url('droom-hualushui.webp')"
+            ></div>
+            <div class="info">
+              <h2>Notes on a Small Object</h2>
+              <p class="meta">Nov 2025 · Object / Memory</p>
+            </div>
+          </a>
+        </article>
+      </main>
+    </section>
+
+    <!-- ========== DATA VISUALIZATIONS SECTION ========== -->
+    <section
+      class="archive-section archive-section--dataviz"
+      data-section="dataviz"
+    >
+      <!-- Arrow from title button to subtabs -->
+      <div class="section-arrow"></div>
+
+      <!-- DataViz subtabs -->
+      <nav class="subtabs subtabs--dataviz">
+        <button class="tab active" data-viz="charts">Charts</button>
+        <button class="tab" data-viz="diagrams">Diagrams</button>
+        <button class="tab" data-viz="timelines">Timelines</button>
+        <button class="tab" data-viz="relations">Relations</button>
+      </nav>
+
+      <!-- One canvas that all views reuse -->
+      <div class="dataviz-panel">
+        <canvas id="datavizCanvas"></canvas>
+        <p class="dataviz-note">
+          Counts are generated from the Documentations and their tags
+        </p>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="archiving.js"></script>
+  </body>
+</html>
