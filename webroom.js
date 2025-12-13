@@ -1,3 +1,7 @@
+// --- Rolling webpage tab title ---
+let text = "Let's Rearrange then Decorate! ";
+let pos = 0;
+
 /* * --- Pop out window ---  */
 document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("pagePopup");
