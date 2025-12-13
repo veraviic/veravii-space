@@ -173,7 +173,8 @@ body {
 .back-btn,
 .instruction-btn,
 .screenshot-btn,
-.qr-btn {
+.qr-btn,
+.about-btn {
   position: fixed;
   padding: 8px 16px;
   background-color: rgba(65, 65, 65, 0.85);
@@ -191,7 +192,8 @@ body {
 .back-btn:hover,
 .instruction-btn:hover,
 .screenshot-btn:hover,
-.qr-btn:hover {
+.qr-btn:hover,
+.about:hover {
   background-color: white;
   color: black;
 }
@@ -220,6 +222,11 @@ body {
 
 .back-btn {
   top: 30px;
+  left: 20px;
+}
+
+.about-btn {
+  top: 100px;
   left: 20px;
 }
 
@@ -412,6 +419,52 @@ body {
   transition: background 0.25s;
 }
 .instruction-content button:hover {
+  background: rgb(50, 40, 70);
+}
+
+/* --- About Panel --- */
+.about-panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.about-panel.active {
+  display: flex;
+}
+
+.about-content {
+  background: #fdf8f1;
+  color: #333;
+  padding: 28px 42px;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+  max-width: 420px;
+  width: 80%;
+  text-align: left;
+}
+
+.about-content h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.about-content button {
+  margin-top: 20px;
+  background: rgb(83, 70, 102);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.about-content button:hover {
   background: rgb(50, 40, 70);
 }
 
