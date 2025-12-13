@@ -370,3 +370,29 @@ modelModal.addEventListener("click", (e) => {
     modalModel.removeAttribute("src");
   }
 });
+
+// ===== IMAGE MODAL (NO-TAPE IMAGE CARDS) =====
+document.addEventListener("click", (e) => {
+  const thumb = e.target.closest(".card.no-tape .thumb");
+  if (!thumb) return;
+
+  // ❗ exclude 3D scan cards
+  if (thumb.closest(".card.has-model")) return;
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  let images = [];
+
+  if (thumb.dataset.images) {
+    images = thumb.dataset.images.split(",").map((s) => s.trim());
+  } else {
+    const bg = thumb.style.backgroundImage;
+    if (!bg || bg === "none") return;
+
+    const url = bg.replace(/^url\(["']?/, "").replace(/["']?\)$/, "");
+    images = [url];
+  }
+
+  openModal(images, 0);
+});
