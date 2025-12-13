@@ -287,19 +287,6 @@ function prevImage() {
   updateImage();
 }
 
-/* no-tape pic selections */
-document.querySelectorAll(".card.no-tape:not(.has-model) .thumb").forEach((thumb) => {
-  thumb.addEventListener("click", () => {
-    const data = thumb.dataset.images;
-
-    const images = data
-      ? data.split(",").map((s) => s.trim())
-      : [thumb.style.backgroundImage.slice(5, -2)];
-
-    openModal(images, 0);
-  });
-});
-
 /* arrows */
 rightBtn.addEventListener("click", nextImage);
 leftBtn.addEventListener("click", prevImage);
@@ -343,3 +330,43 @@ if (category) {
 } else {
   applyFilter("all");
 }
+
+// ===== 3D MODEL MODAL =====
+const modelModal = document.getElementById("modelModal");
+const modalModel = document.getElementById("modalModel");
+const modelCloseBtn = modelModal.querySelector(".img-modal-close");
+
+// open model modal
+document.addEventListener(
+  "click",
+  (e) => {
+    const card = e.target.closest(".card.has-model");
+    if (!card) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const viewer = card.querySelector("model-viewer");
+    if (!viewer) return;
+
+    const src = viewer.getAttribute("src");
+    if (!src) return;
+
+    modalModel.setAttribute("src", src);
+    modelModal.style.display = "flex";
+  },
+  true
+);
+
+// close model modal
+modelCloseBtn.addEventListener("click", () => {
+  modelModal.style.display = "none";
+  modalModel.removeAttribute("src");
+});
+
+modelModal.addEventListener("click", (e) => {
+  if (!e.target.closest(".model-box")) {
+    modelModal.style.display = "none";
+    modalModel.removeAttribute("src");
+  }
+});
