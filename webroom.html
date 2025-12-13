@@ -27,15 +27,16 @@
       
     <!-- Interface Buttons -->
     <button class="toggle" onclick="toggleSidebar()">Objects ←</button>
+    <button class="about-btn" onclick="toggleAbout()">About this room</button>
     <button class="instruction-btn" onclick="toggleInstructions()">
-    👻 Decorate together?
+    👻 Take a Look?
     </button>
     <button class="screenshot-btn" onclick="downloadPic()">
-      📸 Take a Pic!
+      📸 Say "Cheese"!
     </button>
-     <!--<button class="qr-btn" onclick="generateQRCode()">Generate QR Code</button>-->
+    
 
-    <!-- 🎨 Room Background Selector -->
+    <!--  Room Background Selector -->
     <div id="bgSelector">
       <img src="../decoimg/droom-bg1.png" alt="Room 1" onclick="changeRoomBg(1)" />
       <img src="../decoimg/droom-bg2.webp" alt="Room 2" onclick="changeRoomBg(2)" />
@@ -393,6 +394,15 @@
       </div>
     </div>
 
+     <!-- About Panel -->
+    <div id="aboutPanel" class="about-panel">
+      <div class="about-content">
+        <p >Welcome to my home! I'm turning 11 next year, and these are so far my most favorite rooms in the world</p>
+        <p >I wish this could also be your place, where you don't have to worry about ticking clocks, messy rooms, or anything other than happiness.</p>
+        <p style="text-align: center;">Come, and let's rearrange together!</p>
+      </div>
+    </div>
+
     <!-- Instruction Panel -->
     <div id="instructionPanel" class="instruction-panel">
       <div class="instruction-content">
@@ -404,7 +414,6 @@
           <li>📸 Take a picture (left sidebar) and save our memory 🌺</li>
            <!-- <li>🧭 Generate QR code to save your room</li>-->
         </ul>
-        <button onclick="toggleInstructions()">Close</button>
       </div>
     </div>
 
