@@ -30,6 +30,23 @@ function toggleInstructions() {
   panel.classList.toggle("active");
 }
 
+document.getElementById("instructionPanel").addEventListener("click", (e) => {
+  if (e.target.id === "instructionPanel") {
+    e.target.classList.remove("active");
+  }
+});
+
+function toggleAbout() {
+  const panel = document.getElementById("aboutPanel");
+  panel.classList.toggle("active");
+}
+
+document.getElementById("aboutPanel").addEventListener("click", (e) => {
+  if (e.target.id === "aboutPanel") {
+    e.target.classList.remove("active");
+  }
+});
+
 /* --- Drag and Drop --- */
 document.querySelectorAll(".object-card img").forEach((img) => {
   img.addEventListener("dragstart", (e) => {
