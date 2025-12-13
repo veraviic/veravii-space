@@ -2,6 +2,11 @@
 let text = "Let's Rearrange then Decorate! ";
 let pos = 0;
 
+setInterval(() => {
+  document.title = text.slice(pos) + text.slice(0, pos);
+  pos = (pos + 1) % text.length;
+}, 100);
+
 /* * --- Pop out window ---  */
 document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("pagePopup");
