@@ -8,7 +8,11 @@
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"
+      href="https://unpkg.com/pixeloperator-font/css/pixeloperator.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=swap"
+      rel="stylesheet"
     />
     <link rel="stylesheet" href="main.css" />
   </head>
@@ -31,6 +35,15 @@
           </div>
 
           <div class="icon-wrapper">
+            <a href="unity/index.html">
+              <img src="icon_game.png" class="icon" />
+            </a>
+            <div class="icon-label explain" data-tip="Fresh past">
+              Game
+            </div>
+          </div>
+
+          <div class="icon-wrapper">
             <a href="video.html">
               <img src="icon_video.png" class="icon" />
             </a>
@@ -40,13 +53,6 @@
             >
               Video
             </div>
-          </div>
-
-          <div class="icon-wrapper">
-            <a href="unity/index.html">
-              <img src="icon_game.png" class="icon" />
-            </a>
-            <div class="icon-label explain" data-tip="Fresh past">Game</div>
           </div>
 
           <div class="icon-wrapper">
@@ -64,38 +70,52 @@
       </div>
     </div>
 
-    <!--
-<div class="xp-window" id="window-text">
-  <div class="xp-titlebar">
-    <span class="xp-title">Notepad</span>
-    <div class="xp-buttons">
-      <div class="xp-btn xp-min"></div>
-      <div class="xp-btn xp-max"></div>
-      <div class="xp-btn xp-close"></div>
-    </div>
-  </div>
-  <div class="xp-content editable" contenteditable="true">Type here...</div>
-</div>
-
-<div class="xp-window" id="window-two">
-  <div class="xp-titlebar">
-    <span class="xp-title">Info Window</span>
-    <div class="xp-buttons">
-      <div class="xp-btn xp-min"></div>
-      <div class="xp-btn xp-max"></div>
-      <div class="xp-btn xp-close"></div>
-    </div>
-  </div>
-  <div class="xp-content">This is a normal XP-style window.</div>
-</div>
--->
+    <!-- bottom menu bar -->
     <div id="xp-taskbar">
       <img id="xp-start" src="taskbar_menu.png" />
       <div id="xp-middle"></div>
       <div id="xp-clock"></div>
     </div>
 
+    <!--draggable notebook -->
+    <div class="window" id="custom-window">
+      <img src="win_top.png" class="win-top" draggable="false" />
+      <img src="win_body.png" class="win-body" />
+
+      <!-- prettier-ignore -->
+      <div class="content-area">
+        <div class="note-paper" contenteditable="true">☺️ Hello from 2005,<br />I like my home, and<br/>I like my room 🏠,<br />how about you now?
+        </div>
+      </div>
+
+      <div class="resize-handle"></div>
+    </div>
+
+    <!-- draggable sticker window -->
+    <div class="window" id="gif-window">
+      <img src="win_top_blue.png" class="win-top" draggable="false" />
+
+      <div class="side-tabs">
+        <div class="tab active"><span class="tab-icon">📌</span></div>
+        <div class="tab"><span class="tab-icon">⭐</span></div>
+      </div>
+
+      <div class="gif-content tab-panel" id="tab1">
+        <img src="sticker.png" class="gif-image" />
+      </div>
+
+      <div class="gif-content tab-panel" id="tab2">
+        <img src="sticker2.png" class="gif-image" />
+      </div>
+
+      <!-- only one resize handle -->
+      <div class="resize-handle"></div>
+    </div>
+
+    <!--
     <div id="spotlight"></div>
+    -->
+
     <script src="main.js"></script>
   </body>
 </html>

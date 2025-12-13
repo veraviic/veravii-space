@@ -1,3 +1,34 @@
+.popup-window {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none; /* hidden by default */
+  justify-content: center; /* center horizontally */
+  align-items: center; /* center vertically */
+  z-index: 9999;
+}
+
+.popup-inner {
+  background: #f3f3f0;
+  padding: 2rem 2.5rem;
+  border-radius: 14px;
+  max-width: 420px;
+  width: auto;
+  text-align: center;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.popup-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: #2e4185;
+  user-select: none;
+}
+
 /* --- Global layout --- */
 html,
 body {
@@ -27,22 +58,19 @@ body {
 .sidebar {
   position: fixed;
   top: 0;
-  left: -340px;
+  right: -340px; /* start hidden off-screen */
   width: 340px;
   height: 100vh;
   background: linear-gradient(180deg, #3b2a4a, #2a1f38 70%);
   color: white;
-  transition: left 0.5s ease;
+  transition: right 0.5s ease; /* animate from the RIGHT */
   backdrop-filter: blur(10px);
   z-index: 5;
-  box-shadow: 3px 0 12px rgba(0, 0, 0, 0.3);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
   padding-top: 80px;
 }
 
-/* inner scroll area keeps the grid layout */
 .sidebar-content {
   flex: 1;
   overflow-y: auto;
@@ -56,22 +84,9 @@ body {
 }
 
 .sidebar.active {
-  left: 0;
+  right: 0;
 }
 
-/* optional subtle fade at bottom */
-.sidebar-content::after {
-  content: "";
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background: linear-gradient(to bottom, transparent, rgba(43, 31, 56, 0.95));
-  pointer-events: none;
-}
-
-/* optional scrollbar styling */
 .sidebar-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -126,7 +141,7 @@ body {
   color: rgba(255, 255, 255, 0.75);
   margin: 0 4px 6px;
 }
-/* --- Dropped items --- */
+
 .dropped {
   position: absolute;
   cursor: move;
@@ -155,10 +170,10 @@ body {
 }
 
 /* --- Buttons (top & bottom controls) --- */
+.back-btn,
 .instruction-btn,
 .screenshot-btn,
-.qr-btn,
-.back-btn {
+.qr-btn {
   position: fixed;
   padding: 8px 16px;
   background-color: rgba(65, 65, 65, 0.85);
@@ -169,11 +184,14 @@ body {
   font-size: 16px;
   z-index: 10;
   transition: all 0.3s ease;
+  text-decoration: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+
+.back-btn:hover,
 .instruction-btn:hover,
 .screenshot-btn:hover,
-.qr-btn:hover,
-.back-btn:hover {
+.qr-btn:hover {
   background-color: white;
   color: black;
 }
@@ -181,8 +199,8 @@ body {
 /* --- Button placement --- */
 .toggle {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 30px;
+  right: 20px;
   padding: 8px 16px;
   background-color: rgba(65, 65, 65, 0.85);
   color: white;
@@ -199,31 +217,35 @@ body {
   background-color: white;
   color: black;
 }
-.instruction-btn {
-  top: 20px;
-  right: 15px;
-}
-.screenshot-btn {
-  top: 70px;
-  right: 15px;
-}
-.qr-btn {
-  top: 120px;
-  right: 15px;
-}
+
 .back-btn {
-  bottom: 20px;
-  right: 20px;
+  top: 30px;
+  left: 20px;
+}
+
+.instruction-btn {
+  top: 150px;
+  left: 20px;
+}
+
+.screenshot-btn {
+  top: 200px;
+  left: 20px;
+}
+
+.qr-btn {
+  top: 200px;
+  left: 20px;
 }
 
 /* --- Room background selector --- */
 #bgSelector {
   position: fixed;
-  top: 180px;
-  right: 15px;
+  top: 280px;
+  left: 35px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 28px;
   z-index: 10;
 }
 #bgSelector img {
@@ -240,7 +262,7 @@ body {
   border-color: white;
 }
 
-/* 📸 Softer, natural camera flash */
+/* camera flash */
 #flash-overlay {
   position: fixed;
   inset: 0;

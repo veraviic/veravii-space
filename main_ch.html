@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>新民四条402</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"
+    />
+    <link rel="stylesheet" href="main.css" />
+  </head>
+
+  <body>
+    <button id="toggle">English / 中文</button>
+
+    <p class="chititle">欢迎回家，这里是你永久的，可以放松的港湾</p>
+    <p class="title">欢迎回家，现在……你想要<a href="index.html">做什么</a>？</p>
+
+    <ul class="todolist">
+      <li>
+        阅读<a href="objectsarch.html">相册</a>，里面收藏着
+        <span class="explain" data-tip="那些终将遗失或被丢弃的小物件"
+          >被发现与使用过的物件</span
+        >
+      </li>
+      <li>
+        <a href="objectsarch.html">可穿戴装置</a>，我们曾一起制作，并收藏在
+        <span class="explain" data-tip="是不是太旧了？">年份 2028 – 2038</span>
+        的盒子里
+      </li>
+      <li>
+        观看<a href="video.html">视频讯息</a>，上周来自用户
+        <span class="explain" data-tip="也许你能打电话或传真给他"
+          >0351-3042328</span
+        >
+      </li>
+      <li>进入<a href="video.html">其他房间</a>休息或做梦</li>
+      <li>
+        重新布置与装饰<a href="clean.html">你的房间</a>！（妈妈今天打扫过！）
+      </li>
+    </ul>
+
+    <script>
+      // Toggle back to English version
+      document.getElementById("toggle").addEventListener("click", () => {
+        window.location.href = "main.html";
+      });
+    </script>
+  </body>
+</html>

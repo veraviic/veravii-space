@@ -1,6 +1,22 @@
+/* * --- Pop out window ---  */
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("pagePopup");
+  const closeBtn = document.querySelector(".popup-close");
+
+  popup.style.display = "flex"; // show when page opens
+
+  closeBtn.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
+
+  popup.addEventListener("click", (e) => {
+    if (!e.target.closest(".popup-inner")) popup.style.display = "none";
+  });
+});
+
 const sidebar = document.getElementById("sidebar");
 const room = document.getElementById("room");
-room.style.backgroundImage = "url('droom-bg1.webp')";
+room.style.backgroundImage = "url('../decoimg/droom-bg1.png')";
 
 function toggleSidebar() {
   const isActive = sidebar.classList.toggle("active");
@@ -172,14 +188,10 @@ document.addEventListener("keydown", (e) => {
 
 room.addEventListener("click", (e) => {
   if (e.target.closest(".dropped")) {
-    document
-      .querySelectorAll(".dropped")
-      .forEach((el) => el.classList.remove("selected"));
+    document.querySelectorAll(".dropped").forEach((el) => el.classList.remove("selected"));
     e.target.closest(".dropped").classList.add("selected");
   } else {
-    document
-      .querySelectorAll(".dropped")
-      .forEach((el) => el.classList.remove("selected"));
+    document.querySelectorAll(".dropped").forEach((el) => el.classList.remove("selected"));
   }
 });
 
@@ -214,8 +226,7 @@ function showRoomChangeWarning(index) {
     modal.classList.remove("active");
     switchRoom(index);
   };
-  document.getElementById("cancelRoomChange").onclick = () =>
-    modal.classList.remove("active");
+  document.getElementById("cancelRoomChange").onclick = () => modal.classList.remove("active");
   modal.addEventListener("click", (e) => {
     if (e.target === modal) modal.classList.remove("active");
   });
@@ -228,7 +239,7 @@ function switchRoom(index) {
   room.style.opacity = 0;
   setTimeout(() => {
     room.innerHTML = "";
-    room.style.backgroundImage = `url('droom-bg${index}.webp')`;
+    room.style.backgroundImage = `url('../decoimg/droom-bg${index}.png')`;
     room.style.opacity = 1;
   }, 300);
 }
@@ -277,21 +288,59 @@ async function downloadPic() {
   const ctx = polaroid.getContext("2d");
   ctx.fillStyle = "#f8f5ef";
   ctx.fillRect(0, 0, polaroidW, polaroidH);
-  ctx.drawImage(
-    canvas,
-    cropX,
-    cropY,
-    cropW,
-    cropH,
-    borderSides,
-    borderTop,
-    cropW,
-    cropH
-  );
-  ctx.font = "bold 34px 'Playfair Display', serif";
+  ctx.drawImage(canvas, cropX, cropY, cropW, cropH, borderSides, borderTop, cropW, cropH);
+
+  // -------- Polaroid Caption Text (Randomized) --------
+
+  // Define the caption options
+  const captions = [
+    {
+      chinese: "如果完成之后不能带走，装饰的意义是什么呢？",
+      english:
+        "If I can take nothing with afterwards, what's the meaning of placing and decorating here?",
+    },
+    {
+      chinese: "我的留念和在这里的痕迹，是可以保留的吗？",
+      english: "Can I keep my memorabilia and the traces of my time here?",
+    },
+    {
+      chinese: "不同的布置和布局，会让我和所爱物产生更紧密的关系吗？",
+      english: "Will this space lead me to a closer relationship with my beloved objects?",
+    },
+  ];
+
+  // Select a random caption pair
+  const randomIndex = Math.floor(Math.random() * captions.length);
+  const selectedCaption = captions[randomIndex];
+
+  // Main caption (Chinese - bigger + higher)
+  ctx.font = "75px 'Playfair Display', serif";
   ctx.fillStyle = "#2b2b2b";
   ctx.textAlign = "center";
-  /*ctx.fillText("Decorate Your Room", polaroidW / 2, polaroidH - 70);*/
+  ctx.fillText(selectedCaption.chinese, polaroidW / 2, polaroidH - 320);
+
+  // English translation
+  ctx.font = "45px 'Inter', sans-serif";
+  ctx.fillStyle = "#444";
+  ctx.textAlign = "center";
+  ctx.fillText(selectedCaption.english, polaroidW / 2, polaroidH - 220);
+
+  // Old-film timestamp
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const hh = String(now.getHours()).padStart(2, "0");
+  const min = String(now.getMinutes()).padStart(2, "0");
+
+  const timestamp = `${yyyy}.${mm}.${dd}       ${hh}:${min}       veravii.space`;
+
+  // Timestamp (bigger + higher)
+  ctx.font = "50px 'Inter', sans-serif";
+  ctx.fillStyle = "#5d410dff";
+  ctx.fillText(timestamp, polaroidW / 2, polaroidH - 100);
+
+  // Apply Vignette effect
   const vignette = ctx.createRadialGradient(
     polaroidW / 2,
     polaroidH / 2,
@@ -305,6 +354,7 @@ async function downloadPic() {
   ctx.fillStyle = vignette;
   ctx.fillRect(0, 0, polaroidW, polaroidH);
 
+  // Modal and Download handling
   const dataURL = polaroid.toDataURL("image/png");
   const modal = document.getElementById("photoModal");
   const preview = document.getElementById("photoPreview");
@@ -317,8 +367,7 @@ async function downloadPic() {
     link.download = "DecorateYourRoom.png";
     link.click();
   };
-  document.getElementById("continueBtn").onclick = () =>
-    modal.classList.remove("active");
+  document.getElementById("continueBtn").onclick = () => modal.classList.remove("active");
   modal.addEventListener("click", (e) => {
     const photoImg = document.querySelector(".photo-content img");
     if (e.target !== photoImg) modal.classList.remove("active");
