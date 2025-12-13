@@ -320,6 +320,8 @@ body {
 
 .info {
   padding: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .info h2 {
@@ -449,7 +451,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: 10000;
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(12px);
@@ -487,9 +489,9 @@ body {
 }
 
 #modalModel {
-  width: 60vw; /* fluid width */
-  height: 60vh;
-  max-width: 700px; /* avoid growing too big */
+  width: 120vw;
+  height: 90vh;
+  max-width: 700px;
   max-height: 70vh;
 }
 
@@ -500,6 +502,9 @@ body {
 .thumb {
   position: relative;
   overflow: hidden;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
 }
 
 .thumb-hover-text {
@@ -521,6 +526,10 @@ body {
 
 .thumb:hover .thumb-hover-text {
   opacity: 1;
+}
+
+.model-thumb model-viewer {
+  pointer-events: none;
 }
 
 .docs-section {
