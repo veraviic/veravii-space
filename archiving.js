@@ -82,7 +82,7 @@ cards.forEach((card) => {
 });
 
 /* ========= DATA VISUALIZATIONS ========= */
-const vizTabs = document.querySelectorAll(".subtabs--dataviz .tab");
+const vizTabs = document.querySelectorAll(".subtabs--dataviz .datatab");
 const canvas = document.getElementById("datavizCanvas");
 const ctx = canvas ? canvas.getContext("2d") : null;
 let currentChart = null;
