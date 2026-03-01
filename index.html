@@ -3,28 +3,46 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dormroom">
+    <link rel="manifest" href="manifest.webmanifest">
     <title>Unity Web Player | My project (1)</title>
-  </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=1920 height=1080 tabindex="-1" style="width: 1920px; height: 1080px; background: #231F20"></canvas>
-    <script src="Build/dormroom.loader.js"></script>
-    <script>
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.position = "fixed";
-
-        document.body.style.textAlign = "left";
-
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #231F20;
       }
 
+      body {
+        text-align: center;
+        padding-top: env(safe-area-inset-top);
+        padding-right: env(safe-area-inset-right);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        box-sizing: border-box;
+      }
+
+      #unity-canvas {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        background: #231F20;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="unity-canvas" width=1920 height=1080 tabindex="-1"></canvas>
+    <script src="Build/dormroom.loader.js"></script>
+    <script>
       createUnityInstance(document.querySelector("#unity-canvas"), {
         arguments: [],
         dataUrl: "Build/dormroom.data.unityweb",
