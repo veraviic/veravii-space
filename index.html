@@ -1,121 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
   <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=800, height=600, initial-scale=1.0,user-scalable=no"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/pixeloperator-font/css/pixeloperator.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="main.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity Web Player | My project (1)</title>
   </head>
+  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
+    <canvas id="unity-canvas" width=1920 height=1080 tabindex="-1" style="width: 1920px; height: 1080px; background: #231F20"></canvas>
+    <script src="Build/dormroom.loader.js"></script>
+    <script>
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
 
-  <body>
-    <!-- Centered desktop layout -->
-    <div id="desktop">
-      <div id="desktop-content">
-        <div class="desktop-icons">
-          <div class="icon-wrapper">
-            <a href="archiving.html">
-              <img src="icon_archiving.png" class="icon" />
-            </a>
-            <div
-              class="icon-label explain"
-              data-tip="Objects and memories eventually lose or toss"
-            >
-              Archive
-            </div>
-          </div>
+        var canvas = document.querySelector("#unity-canvas");
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.position = "fixed";
 
-          <div class="icon-wrapper">
-            <a href="unity/index.html">
-              <img src="icon_game.png" class="icon" />
-            </a>
-            <div class="icon-label explain" data-tip="Fresh past">
-              Game
-            </div>
-          </div>
+        document.body.style.textAlign = "left";
 
-          <div class="icon-wrapper">
-            <a href="video.html">
-              <img src="icon_video.png" class="icon" />
-            </a>
-            <div
-              class="icon-label explain"
-              data-tip="Click to videocall 0351-3042328"
-            >
-              Video
-            </div>
-          </div>
+      }
 
-          <div class="icon-wrapper">
-            <a href="webroom.html">
-              <img src="icon_decorate.png" class="icon" />
-            </a>
-            <div
-              class="icon-label explain"
-              data-tip="Rearrange and decorate UR space"
-            >
-              Decorate
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- bottom menu bar -->
-    <div id="xp-taskbar">
-      <img id="xp-start" src="taskbar_menu.png" />
-      <div id="xp-middle"></div>
-      <div id="xp-clock"></div>
-    </div>
-
-    <!--draggable notebook -->
-    <div class="window" id="custom-window">
-      <img src="win_top.png" class="win-top" draggable="false" />
-      <img src="win_body.png" class="win-body" />
-
-      <!-- prettier-ignore -->
-      <div class="content-area">
-        <div class="note-paper" contenteditable="true">☺️ Hello from 2005,<br />I like my home, and<br/>I like my room 🏠,<br />how about you now?
-        </div>
-      </div>
-
-      <div class="resize-handle"></div>
-    </div>
-
-    <!-- draggable sticker window -->
-    <div class="window" id="gif-window">
-      <img src="win_top_blue.png" class="win-top" draggable="false" />
-
-      <div class="side-tabs">
-        <div class="tab active"><span class="tab-icon">📌</span></div>
-        <div class="tab"><span class="tab-icon">⭐</span></div>
-      </div>
-
-      <div class="gif-content tab-panel" id="tab1">
-        <img src="sticker.png" class="gif-image" />
-      </div>
-
-      <div class="gif-content tab-panel" id="tab2">
-        <img src="sticker2.png" class="gif-image" />
-      </div>
-
-      <!-- only one resize handle -->
-      <div class="resize-handle"></div>
-    </div>
-
-    <!--
-    <div id="spotlight"></div>
-    -->
-
-    <script src="main.js"></script>
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        arguments: [],
+        dataUrl: "Build/dormroom.data.unityweb",
+        frameworkUrl: "Build/dormroom.framework.js.unityweb",
+        codeUrl: "Build/dormroom.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "GN",
+        productName: "My project (1)",
+        productVersion: "0.1.0",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      }).then((unityInstance) => {
+      }).catch((message) => {
+        alert(message);
+      });
+    </script>
   </body>
 </html>
