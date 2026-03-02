@@ -14,6 +14,168 @@ document.querySelectorAll(".card:not(.no-tape)").forEach((card) => {
 });
 
 /* ========= ABOUT / DOCS / DATAVIZ SWITCH ========= */
+const sidebarToggle = document.getElementById("sidebarToggle");
+const sidebarClose = document.getElementById("sidebarClose");
+const archiveSidebar = document.getElementById("archiveSidebar");
+const MOBILE_SIDEBAR_BP = 768;
+let suppressToggleClick = false;
+
+function isMobileSidebar() {
+  return window.matchMedia(`(max-width: ${MOBILE_SIDEBAR_BP}px)`).matches;
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function keepToggleInViewport() {
+  if (!sidebarToggle || !isMobileSidebar()) return;
+
+  const rect = sidebarToggle.getBoundingClientRect();
+  const minMargin = 8;
+  const maxLeft = window.innerWidth - rect.width - minMargin;
+  const maxTop = window.innerHeight - rect.height - minMargin;
+
+  const clampedLeft = clamp(rect.left, minMargin, maxLeft);
+  const clampedTop = clamp(rect.top, minMargin, maxTop);
+
+  sidebarToggle.style.left = `${clampedLeft}px`;
+  sidebarToggle.style.top = `${clampedTop}px`;
+  sidebarToggle.style.right = "auto";
+  sidebarToggle.style.bottom = "auto";
+}
+
+function closeSidebarPanel() {
+  document.body.classList.remove("sidebar-open");
+}
+
+if (sidebarToggle) {
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let toggleStartLeft = 0;
+  let toggleStartTop = 0;
+  let moved = false;
+  let activePointerId = null;
+
+  sidebarToggle.addEventListener("pointerdown", (event) => {
+    if (!isMobileSidebar()) return;
+    if (event.button !== 0) return;
+
+    const rect = sidebarToggle.getBoundingClientRect();
+    dragStartX = event.clientX;
+    dragStartY = event.clientY;
+    toggleStartLeft = rect.left;
+    toggleStartTop = rect.top;
+    moved = false;
+    activePointerId = event.pointerId;
+
+    sidebarToggle.classList.add("is-dragging");
+    sidebarToggle.setPointerCapture(event.pointerId);
+  });
+
+  sidebarToggle.addEventListener("pointermove", (event) => {
+    if (activePointerId !== event.pointerId) return;
+
+    const deltaX = event.clientX - dragStartX;
+    const deltaY = event.clientY - dragStartY;
+
+    if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) {
+      moved = true;
+    }
+
+    if (!moved) return;
+
+    const width = sidebarToggle.offsetWidth;
+    const height = sidebarToggle.offsetHeight;
+    const minMargin = 8;
+    const maxLeft = window.innerWidth - width - minMargin;
+    const maxTop = window.innerHeight - height - minMargin;
+
+    const nextLeft = clamp(toggleStartLeft + deltaX, minMargin, maxLeft);
+    const nextTop = clamp(toggleStartTop + deltaY, minMargin, maxTop);
+
+    sidebarToggle.style.left = `${nextLeft}px`;
+    sidebarToggle.style.top = `${nextTop}px`;
+    sidebarToggle.style.right = "auto";
+    sidebarToggle.style.bottom = "auto";
+  });
+
+  sidebarToggle.addEventListener("pointerup", (event) => {
+    if (activePointerId !== event.pointerId) return;
+
+    sidebarToggle.classList.remove("is-dragging");
+    if (sidebarToggle.hasPointerCapture(event.pointerId)) {
+      sidebarToggle.releasePointerCapture(event.pointerId);
+    }
+
+    if (moved) {
+      suppressToggleClick = true;
+    }
+
+    activePointerId = null;
+  });
+
+  sidebarToggle.addEventListener("pointercancel", (event) => {
+    if (activePointerId !== event.pointerId) return;
+
+    sidebarToggle.classList.remove("is-dragging");
+    if (sidebarToggle.hasPointerCapture(event.pointerId)) {
+      sidebarToggle.releasePointerCapture(event.pointerId);
+    }
+    activePointerId = null;
+  });
+
+  sidebarToggle.addEventListener("click", () => {
+    if (suppressToggleClick) {
+      suppressToggleClick = false;
+      return;
+    }
+
+    if (isMobileSidebar()) {
+      document.body.classList.toggle("sidebar-open");
+    } else {
+      document.body.classList.toggle("sidebar-open");
+    }
+  });
+
+  keepToggleInViewport();
+}
+
+if (!isMobileSidebar()) {
+  document.body.classList.remove("sidebar-open");
+}
+
+window.addEventListener("resize", () => {
+  if (isMobileSidebar()) {
+    keepToggleInViewport();
+  } else if (sidebarToggle) {
+    sidebarToggle.style.removeProperty("left");
+    sidebarToggle.style.removeProperty("top");
+    sidebarToggle.style.removeProperty("right");
+    sidebarToggle.style.removeProperty("bottom");
+  }
+
+  if (!isMobileSidebar()) {
+    document.body.classList.remove("sidebar-open");
+  }
+});
+
+if (sidebarClose) {
+  sidebarClose.addEventListener("click", closeSidebarPanel);
+}
+
+document.addEventListener("pointerdown", (event) => {
+  if (!document.body.classList.contains("sidebar-open")) return;
+
+  const target = event.target;
+  const clickedInsideSidebar = archiveSidebar && archiveSidebar.contains(target);
+  const clickedToggle = sidebarToggle && sidebarToggle.contains(target);
+
+  if (!clickedInsideSidebar && !clickedToggle) {
+    closeSidebarPanel();
+  }
+});
+
 const modeButtons = document.querySelectorAll(".titlebutton");
 const aboutSection = document.querySelector(".archive-section--about");
 const docsSection = document.querySelector(".archive-section--docs");
@@ -41,6 +203,10 @@ modeButtons.forEach((btn) => {
     } else if (target === "dataviz") {
       datavizSection.classList.add("active");
       renderChart("bar");
+    }
+
+    if (isMobileSidebar()) {
+      document.body.classList.remove("sidebar-open");
     }
   });
 });
@@ -372,6 +538,27 @@ modelModal.addEventListener("click", (e) => {
 });
 
 // ===== IMAGE MODAL (NO-TAPE IMAGE CARDS) =====
+function isTouchPrimaryInput() {
+  return window.matchMedia("(hover: none), (pointer: coarse)").matches;
+}
+
+function clearTouchHoverText(exceptThumb = null) {
+  document.querySelectorAll(".thumb.touch-hover-active").forEach((item) => {
+    if (item !== exceptThumb) {
+      item.classList.remove("touch-hover-active");
+    }
+  });
+}
+
+document.addEventListener("click", (e) => {
+  if (!isTouchPrimaryInput()) return;
+
+  const clickedThumb = e.target.closest(".card.no-tape .thumb");
+  if (clickedThumb) return;
+
+  clearTouchHoverText();
+});
+
 document.addEventListener("click", (e) => {
   const thumb = e.target.closest(".card.no-tape .thumb");
   if (!thumb) return;
@@ -379,8 +566,22 @@ document.addEventListener("click", (e) => {
   // ❗ exclude 3D scan cards
   if (thumb.closest(".card.has-model")) return;
 
+  const hasHoverMemo = !!thumb.querySelector(".thumb-hover-text");
+
+  if (isTouchPrimaryInput() && hasHoverMemo && !thumb.classList.contains("touch-hover-active")) {
+    e.preventDefault();
+    e.stopPropagation();
+    clearTouchHoverText(thumb);
+    thumb.classList.add("touch-hover-active");
+    return;
+  }
+
   e.preventDefault();
   e.stopPropagation();
+
+  if (isTouchPrimaryInput()) {
+    thumb.classList.remove("touch-hover-active");
+  }
 
   let images = [];
 
