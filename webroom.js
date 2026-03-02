@@ -1,4 +1,4 @@
-// --- Rolling webpage tab title ---
+// --- Rolling pngage tab title ---
 let text = "Let's Rearrange then Decorate! ";
 let pos = 0;
 
@@ -12,25 +12,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("pagePopup");
   const closeBtn = document.querySelector(".popup-close");
 
-  popup.style.display = "flex"; // show when page opens
+  if (popup && closeBtn) {
+    popup.style.display = "flex"; // show when page opens
 
-  closeBtn.addEventListener("click", () => {
-    popup.style.display = "none";
-  });
+    closeBtn.addEventListener("click", () => {
+      popup.style.display = "none";
+    });
 
-  popup.addEventListener("click", (e) => {
-    if (!e.target.closest(".popup-inner")) popup.style.display = "none";
+    popup.addEventListener("click", (e) => {
+      if (!e.target.closest(".popup-inner")) popup.style.display = "none";
+    });
+  }
+
+  // When running from file://, images with crossorigin often fail to load.
+  // Remove the attribute and force a reload so sidebar thumbnails appear.
+  document.querySelectorAll(".object-card img, #bgSelector img").forEach((img) => {
+    if (!img) return;
+    if (img.hasAttribute("crossorigin")) img.removeAttribute("crossorigin");
+    const src = img.getAttribute("src");
+    if (!src) return;
+    // If it previously failed (common on file:// with crossorigin), force a reload.
+    const needsBust = img.complete && img.naturalWidth === 0;
+    img.src = needsBust ? `${src}${src.includes("?") ? "&" : "?"}v=${Date.now()}` : src;
   });
 });
 
 const sidebar = document.getElementById("sidebar");
 const room = document.getElementById("room");
-room.style.backgroundImage = "url('../decoimg/droom-bg1.png')";
+room.style.backgroundImage = "url('./decoimg/droom-bg1.png')";
 
 function toggleSidebar() {
   const isActive = sidebar.classList.toggle("active");
   const toggleBtn = document.querySelector(".toggle");
-  toggleBtn.textContent = isActive ? "Hide Objects →" : "Objects ←";
+  toggleBtn.textContent = isActive ? "隐藏物品栏 →" : "物品 ←";
   room.classList.toggle("shift-right", isActive);
 }
 
@@ -74,8 +88,13 @@ room.addEventListener("drop", (e) => {
   if (!src) return;
 
   const rect = room.getBoundingClientRect();
-  const x = e.clientX - rect.left - 60;
-  const y = e.clientY - rect.top - 60;
+  const roomWidth = rect.width;
+  const roomHeight = rect.height;
+  const objectSize = Math.min(roomWidth, roomHeight) * 0.15; // 15% of room size
+  const offsetSize = objectSize / 2;
+
+  const x = e.clientX - rect.left - offsetSize;
+  const y = e.clientY - rect.top - offsetSize;
 
   const wrapper = document.createElement("div");
   wrapper.classList.add("dropped");
@@ -85,7 +104,7 @@ room.addEventListener("drop", (e) => {
   const newImg = document.createElement("img");
   newImg.src = src;
   newImg.draggable = false;
-  newImg.style.width = "200px";
+  newImg.style.width = `${objectSize}px`;
   newImg.style.height = "auto";
 
   const resizeHandle = document.createElement("div");
@@ -102,8 +121,14 @@ room.addEventListener("drop", (e) => {
   makeDraggable(wrapper);
   enableResizing(wrapper);
   enableRotation(wrapper);
+  // Optional feature: keep safe if not implemented.
   enablePerspectiveTransform(wrapper);
 });
+
+// Some older drafts referenced this; keep as a safe no-op if undefined.
+function enablePerspectiveTransform() {
+  // intentionally empty
+}
 
 /* --- Make Dropped Objects Draggable --- */
 function makeDraggable(element) {
@@ -265,139 +290,395 @@ function switchRoom(index) {
   room.style.opacity = 0;
   setTimeout(() => {
     room.innerHTML = "";
-    room.style.backgroundImage = `url('../decoimg/droom-bg${index}.png')`;
+    room.style.backgroundImage = `url('./decoimg/droom-bg${index}.png')`;
     room.style.opacity = 1;
   }, 300);
 }
 
 /* --- Screenshot & QR Functions --- */
-async function downloadPic() {
-  const flash = document.getElementById("flash-overlay");
-  flash.classList.add("active");
-  setTimeout(() => flash.classList.remove("active"), 1000);
-
-  const cameraSound = document.getElementById("camera-sound");
-  cameraSound.currentTime = 0;
-  cameraSound.play();
-
-  const canvas = await html2canvas(room, {
-    backgroundColor: "#ffffff",
-    scale: 2,
-    useCORS: true,
+const __loadImage = (src) =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+    img.src = src;
   });
 
-  const imageRatio = 4 / 3;
-  const imgW = canvas.width;
-  const imgH = canvas.height;
-  let cropX = 0,
-    cropY = 0,
-    cropW = imgW,
-    cropH = imgH;
-  const currentRatio = imgW / imgH;
-  if (currentRatio > imageRatio) {
-    cropW = imgH * imageRatio;
-    cropX = (imgW - cropW) / 2;
-  } else {
-    cropH = imgW / imageRatio;
-    cropY = (imgH - cropH) / 2;
+const __drawBackgroundContain = (ctx, img, w, h) => {
+  const scale = Math.min(w / img.width, h / img.height);
+  const dw = img.width * scale;
+  const dh = img.height * scale;
+  const dx = (w - dw) / 2;
+  const dy = (h - dh) / 2;
+  ctx.drawImage(img, dx, dy, dw, dh);
+};
+
+async function __renderRoomToCanvas(roomEl, { scale = 1.5 } = {}) {
+  const rect = roomEl.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(rect.width * scale * dpr));
+  canvas.height = Math.max(1, Math.round(rect.height * scale * dpr));
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
+  ctx.clearRect(0, 0, rect.width, rect.height);
+
+  // Background image (matches `.room { background-size: contain; background-position: center; }`)
+  const bgCss = getComputedStyle(roomEl).backgroundImage;
+  const match = /url\((['"]?)(.*?)\1\)/.exec(bgCss || "");
+  const bgUrl = match?.[2];
+  if (bgUrl) {
+    try {
+      const bgImg = await __loadImage(bgUrl);
+      __drawBackgroundContain(ctx, bgImg, rect.width, rect.height);
+    } catch {
+      // ignore background load failures; continue with objects
+    }
   }
 
-  const borderTop = cropH * 0.06;
-  const borderSides = cropW * 0.06;
-  const borderBottom = cropH * 0.28;
-  const polaroidW = cropW + borderSides * 2;
-  const polaroidH = cropH + borderTop + borderBottom;
+  // Objects (basic 2D rotation support)
+  const roomRect = rect;
+  const dropped = Array.from(roomEl.querySelectorAll(".dropped"));
+  for (const wrapper of dropped) {
+    const imgEl = wrapper.querySelector("img");
+    if (!imgEl || !imgEl.src) continue;
 
-  const polaroid = document.createElement("canvas");
-  polaroid.width = polaroidW;
-  polaroid.height = polaroidH;
-  const ctx = polaroid.getContext("2d");
-  ctx.fillStyle = "#f8f5ef";
-  ctx.fillRect(0, 0, polaroidW, polaroidH);
-  ctx.drawImage(canvas, cropX, cropY, cropW, cropH, borderSides, borderTop, cropW, cropH);
+    const imgRect = imgEl.getBoundingClientRect();
+    const cx = imgRect.left - roomRect.left + imgRect.width / 2;
+    const cy = imgRect.top - roomRect.top + imgRect.height / 2;
 
-  // -------- Polaroid Caption Text (Randomized) --------
+    const t = getComputedStyle(wrapper).transform;
+    let rotation = 0;
+    if (t && t !== "none") {
+      try {
+        const m = new DOMMatrixReadOnly(t);
+        // Approximate 2D rotation from the matrix.
+        rotation = Math.atan2(m.b, m.a);
+      } catch {
+        // ignore transform parsing failures
+      }
+    }
 
-  // Define the caption options
-  const captions = [
-    {
-      chinese: "如果完成之后不能带走，装饰的意义是什么呢？",
-      english:
-        "If I can take nothing with afterwards, what's the meaning of placing and decorating here?",
-    },
-    {
-      chinese: "我的留念和在这里的痕迹，是可以保留的吗？",
-      english: "Can I keep my memorabilia and the traces of my time here?",
-    },
-    {
-      chinese: "不同的布置和布局，会让我和所爱物产生更紧密的关系吗？",
-      english: "Will this space lead me to a closer relationship with my beloved objects?",
-    },
-  ];
+    let img;
+    try {
+      img = await __loadImage(imgEl.src);
+    } catch {
+      continue;
+    }
 
-  // Select a random caption pair
-  const randomIndex = Math.floor(Math.random() * captions.length);
-  const selectedCaption = captions[randomIndex];
+    const dw = imgRect.width;
+    const dh = imgRect.height;
+    ctx.save();
+    ctx.translate(cx, cy);
+    if (rotation) ctx.rotate(rotation);
+    ctx.drawImage(img, -dw / 2, -dh / 2, dw, dh);
+    ctx.restore();
+  }
 
-  // Main caption (Chinese - bigger + higher)
-  ctx.font = "75px 'Playfair Display', serif";
-  ctx.fillStyle = "#2b2b2b";
-  ctx.textAlign = "center";
-  ctx.fillText(selectedCaption.chinese, polaroidW / 2, polaroidH - 320);
+  return canvas;
+}
 
-  // English translation
-  ctx.font = "45px 'Inter', sans-serif";
-  ctx.fillStyle = "#444";
-  ctx.textAlign = "center";
-  ctx.fillText(selectedCaption.english, polaroidW / 2, polaroidH - 220);
+async function downloadPic() {
+  try {
+    const flash = document.getElementById("flash-overlay");
+    flash.classList.add("active");
+    setTimeout(() => flash.classList.remove("active"), 1000);
 
-  // Old-film timestamp
-  const now = new Date();
-  const yyyy = now.getFullYear();
-  const mm = String(now.getMonth() + 1).padStart(2, "0");
-  const dd = String(now.getDate()).padStart(2, "0");
-  const hh = String(now.getHours()).padStart(2, "0");
-  const min = String(now.getMinutes()).padStart(2, "0");
+    const cameraSound = document.getElementById("camera-sound");
+    cameraSound.currentTime = 0;
+    // Avoid blocking the screenshot flow if autoplay is disallowed or file path is wrong.
+    cameraSound.play().catch(() => {});
 
-  const timestamp = `${yyyy}.${mm}.${dd}       ${hh}:${min}       veravii.space`;
+    const roomEl = document.getElementById("room");
+    const canAttemptCapture = !!roomEl;
 
-  // Timestamp (bigger + higher)
-  ctx.font = "50px 'Inter', sans-serif";
-  ctx.fillStyle = "#5d410dff";
-  ctx.fillText(timestamp, polaroidW / 2, polaroidH - 100);
+    // Defaults used for file:// fallback; overwritten when we can capture a real screenshot.
+    let polaroidW = 840;
+    let borderTop = 34;
+    let borderSides = 44;
+    let borderBottom = 170;
+    // Keep the inner “photo” area at 4:3 like a real Polaroid.
+    let imageW = polaroidW - borderSides * 2;
+    let imageH = Math.round((imageW * 3) / 4);
+    let polaroidH = borderTop + imageH + borderBottom;
 
-  // Apply Vignette effect
-  const vignette = ctx.createRadialGradient(
-    polaroidW / 2,
-    polaroidH / 2,
-    polaroidW / 2.8,
-    polaroidW / 2,
-    polaroidH / 2,
-    polaroidW / 1.05
-  );
-  vignette.addColorStop(0, "rgba(0,0,0,0)");
-  vignette.addColorStop(1, "rgba(0,0,0,0.06)");
-  ctx.fillStyle = vignette;
-  ctx.fillRect(0, 0, polaroidW, polaroidH);
+    const polaroid = document.createElement("canvas");
+    const ctx = polaroid.getContext("2d");
 
-  // Modal and Download handling
-  const dataURL = polaroid.toDataURL("image/png");
+    if (!ctx) {
+      throw new Error("Unable to get canvas context");
+    }
+
+    if (canAttemptCapture) {
+      let shot;
+      if (typeof html2canvas === "function") {
+        try {
+          console.log("Attempting html2canvas capture...");
+          shot = await html2canvas(roomEl, {
+            backgroundColor: null,
+            scale: 1.5,
+            useCORS: true,
+          });
+          console.log("html2canvas succeeded");
+        } catch (e) {
+          console.warn("html2canvas capture failed; falling back to custom renderer", e);
+        }
+      } else {
+        console.warn("html2canvas not available");
+      }
+      if (!shot) {
+        try {
+          console.log("Attempting custom renderer...");
+          shot = await __renderRoomToCanvas(roomEl, { scale: 1.5 });
+          console.log("Custom renderer succeeded");
+        } catch (e) {
+          console.warn("Custom renderer failed", e);
+        }
+      }
+
+      if (!shot) throw new Error("Unable to capture the room.");
+
+      console.log("Shot captured:", shot.width, "x", shot.height);
+
+      // Crop to 4:3
+      const imageRatio = 4 / 3;
+      const imgW = shot.width;
+      const imgH = shot.height;
+      let cropX = 0,
+        cropY = 0,
+        cropW = imgW,
+        cropH = imgH;
+      const currentRatio = imgW / imgH;
+      if (currentRatio > imageRatio) {
+        cropW = imgH * imageRatio;
+        cropX = (imgW - cropW) / 2;
+      } else {
+        cropH = imgW / imageRatio;
+        cropY = (imgH - cropH) / 2;
+      }
+
+      borderTop = cropH * 0.06;
+      borderSides = cropW * 0.06;
+      borderBottom = cropH * 0.25;
+      polaroidW = cropW + borderSides * 2;
+      polaroidH = cropH + borderTop + borderBottom;
+      imageW = cropW;
+      imageH = cropH;
+
+      polaroid.width = polaroidW;
+      polaroid.height = polaroidH;
+
+      // Draw white background
+      ctx.fillStyle = "#f8f5ef";
+      ctx.fillRect(0, 0, polaroidW, polaroidH);
+
+      // Draw screenshot
+      ctx.drawImage(shot, cropX, cropY, cropW, cropH, borderSides, borderTop, cropW, cropH);
+    } else {
+      if (window.location.protocol === "file:" && !window.__screenshotHintShown) {
+        window.__screenshotHintShown = true;
+        console.warn(
+          "Screenshot capture is limited on file://. For full screenshots, run a local server (e.g. `python3 -m http.server`) and open http://localhost:8000/webroom.html",
+        );
+      }
+
+      // Recompute based on the fallback sizing.
+      imageW = polaroidW - borderSides * 2;
+      imageH = Math.round((imageW * 3) / 4);
+      polaroidH = borderTop + imageH + borderBottom;
+
+      polaroid.width = polaroidW;
+      polaroid.height = polaroidH;
+
+      // Draw white background
+      ctx.fillStyle = "#f8f5ef";
+      ctx.fillRect(0, 0, polaroidW, polaroidH);
+
+      // Draw a simple placeholder for the room (beige colored area)
+      ctx.fillStyle = "#d4c4b0";
+      ctx.fillRect(borderSides, borderTop, imageW, imageH);
+
+      // Draw decorative border/frame effect
+      ctx.strokeStyle = "#9d8b7d";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(borderSides, borderTop, imageW, imageH);
+    }
+
+    const wrapText = (ctx2, text, x, y, maxWidth, lineHeight, maxLines) => {
+      const words = String(text).split(/\s+/).filter(Boolean);
+      if (words.length === 0) return 0;
+      let line = "";
+      let linesDrawn = 0;
+
+      for (let i = 0; i < words.length; i++) {
+        const testLine = line ? `${line} ${words[i]}` : words[i];
+        if (ctx2.measureText(testLine).width <= maxWidth || !line) {
+          line = testLine;
+          continue;
+        }
+
+        ctx2.fillText(line, x, y + linesDrawn * lineHeight);
+        linesDrawn++;
+        line = words[i];
+
+        if (maxLines && linesDrawn >= maxLines) {
+          return linesDrawn;
+        }
+      }
+
+      if (!maxLines || linesDrawn < maxLines) {
+        ctx2.fillText(line, x, y + linesDrawn * lineHeight);
+        linesDrawn++;
+      }
+
+      return linesDrawn;
+    };
+
+    // Define captions
+    const captions = [
+      {
+        chinese: "如果完成之后不能带走，装饰的意义是什么呢？",
+        english:
+          "If I can take nothing with afterwards, what's the meaning of placing and decorating here?",
+      },
+      {
+        chinese: "我的留念和在这里的痕迹，是可以保留的吗？",
+        english: "Can I keep my memorabilia and the traces of my time here?",
+      },
+      {
+        chinese: "不同的布置和布局，会让我和所爱物产生更紧密的关系吗？",
+        english: "Will this space lead me to a closer relationship with my beloved objects?",
+      },
+    ];
+
+    // Select random caption
+    const randomIndex = Math.floor(Math.random() * captions.length);
+    const selectedCaption = captions[randomIndex];
+
+    // Add text to polaroid
+    const textStartY = borderTop + imageH + Math.max(34, Math.round(borderBottom * 0.18));
+
+    // Chinese caption
+    const chineseFontSize = Math.max(16, Math.round(polaroidW * 0.03));
+    ctx.font = `${chineseFontSize}px 'Playfair Display', serif`;
+    ctx.fillStyle = "#2b2b2b";
+    ctx.textAlign = "center";
+    ctx.fillText(selectedCaption.chinese, polaroidW / 2, textStartY);
+
+    // English caption
+    const englishFontSize = Math.max(12, Math.round(polaroidW * 0.02));
+    ctx.font = `${englishFontSize}px sans-serif`;
+    ctx.fillStyle = "#555555";
+    const englishMaxWidth = polaroidW - borderSides * 2 - 20;
+    const englishLines = wrapText(
+      ctx,
+      selectedCaption.english,
+      polaroidW / 2,
+      textStartY + Math.round(chineseFontSize * 0.9),
+      englishMaxWidth,
+      Math.round(englishFontSize * 1.25),
+      2,
+    );
+
+    // Timestamp
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    const hh = String(now.getHours()).padStart(2, "0");
+    const min = String(now.getMinutes()).padStart(2, "0");
+    const timestamp = `${yyyy}.${mm}.${dd}  ${hh}:${min}  veravii.space`;
+
+    const timestampFontSize = Math.max(11, Math.round(polaroidW * 0.017));
+    ctx.font = `${timestampFontSize}px sans-serif`;
+    ctx.fillStyle = "#8b7355";
+    const tsY =
+      textStartY +
+      Math.round(chineseFontSize * 0.9) +
+      englishLines * Math.round(englishFontSize * 1.25) +
+      Math.round(timestampFontSize * 1.6);
+    ctx.fillText(timestamp, polaroidW / 2, tsY);
+
+    // Modal and Download handling
+    try {
+      const dataURL = polaroid.toDataURL("image/png");
+      setupModal(dataURL);
+    } catch (blobError) {
+      console.error("toDataURL failed:", blobError);
+      alert("Error creating screenshot. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error generating polaroid:", error);
+    alert("Error creating screenshot. Please try again.");
+  }
+}
+
+function setupModal(dataURL) {
   const modal = document.getElementById("photoModal");
   const preview = document.getElementById("photoPreview");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const continueBtn = document.getElementById("continueBtn");
+  const content = modal?.querySelector(".photo-content");
+  const buttonsWrap = modal?.querySelector(".photo-buttons");
+
+  if (!modal || !preview || !downloadBtn || !continueBtn) return;
+
+  const closeModal = () => {
+    modal.classList.remove("active");
+    // Clean up blob URL previews to avoid memory leaks.
+    if (typeof dataURL === "string" && dataURL.startsWith("blob:")) {
+      try {
+        URL.revokeObjectURL(dataURL);
+      } catch {
+        // ignore
+      }
+    }
+  };
+
   preview.src = dataURL;
   modal.classList.add("active");
 
-  document.getElementById("downloadBtn").onclick = () => {
+  // Remove any old listeners
+  downloadBtn.onclick = null;
+  continueBtn.onclick = null;
+  modal.onclick = null;
+  if (content) content.onclick = null;
+  if (buttonsWrap) buttonsWrap.onclick = null;
+  preview.onclick = null;
+
+  // Close when clicking outside the polaroid/buttons
+  modal.onclick = (e) => {
+    if (e.target === modal || e.target === content) closeModal();
+  };
+  // Prevent clicks on the image/buttons from closing
+  preview.onclick = (e) => e.stopPropagation();
+  if (buttonsWrap) {
+    buttonsWrap.onclick = (e) => e.stopPropagation();
+  }
+
+  downloadBtn.onclick = (e) => {
+    e.stopPropagation();
     const link = document.createElement("a");
     link.href = dataURL;
     link.download = "DecorateYourRoom.png";
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
   };
-  document.getElementById("continueBtn").onclick = () => modal.classList.remove("active");
-  modal.addEventListener("click", (e) => {
-    const photoImg = document.querySelector(".photo-content img");
-    if (e.target !== photoImg) modal.classList.remove("active");
-  });
+
+  continueBtn.onclick = (e) => {
+    e.stopPropagation();
+    closeModal();
+  };
+
+  // Escape closes the modal
+  const onKeyDown = (e) => {
+    if (e.key === "Escape") {
+      closeModal();
+      document.removeEventListener("keydown", onKeyDown);
+    }
+  };
+  document.addEventListener("keydown", onKeyDown);
 }
 
 function generateQRCode() {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,7 +12,8 @@
   </head>
 
   <body>
-    <!--
+    <div id="app">
+      <!--
       Pop out window
       <div id="pagePopup" class="popup-window">
         <div class="popup-inner">
@@ -22,411 +23,385 @@
         </div>
       </div>
     -->
-      
-      
-    <!-- Interface Buttons -->
-    <button class="toggle" onclick="toggleSidebar()">Objects ←</button>
-    <button class="about-btn" onclick="toggleAbout()">About this room</button>
-    <button class="instruction-btn" onclick="toggleInstructions()">
-    👻 Take a Look?
-    </button>
-    <button class="screenshot-btn" onclick="downloadPic()">
-      📸 Say "Cheese"!
-    </button>
-    
 
-    <!--  Room Background Selector -->
-    <div id="bgSelector">
-      <img src="../decoimg/droom-bg1.png" alt="Room 1" onclick="changeRoomBg(1)" />
-      <img src="../decoimg/droom-bg2.webp" alt="Room 2" onclick="changeRoomBg(2)" />
-    </div>
+      <!-- Interface Buttons -->
 
-    <a href="index.html" class="back-btn"> ← Back to Desktop</a>
+      <button class="toggle" onclick="toggleSidebar()">物品 ←</button>
+      <button class="about-btn" onclick="toggleAbout()">关于装饰的房间</button>
+      <button class="instruction-btn" onclick="toggleInstructions()">👻 我的留言</button>
+      <button class="screenshot-btn" onclick="downloadPic()">📸 满意就留念吧!</button>
 
-    <!-- Object Sidebar Drawer -->
-    <div id="sidebar" class="sidebar">
-      <div class="sidebar-content">
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-blockingtoy.webp"
-            alt="Blocking Toy"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>木质积木</h3>
-            <h6>Blocking Toy</h6>
-            <p>Always loved those arched pieces cause they feel great to the touch</p>
-          </div>
+      <!--  Room Background Selector -->
+      <div id="bgSelector">
+        <div class="bg-thumb-wrapper">
+          <img src="./decoimg/droom-bg1.png" alt="Room 1" onclick="changeRoomBg(1)" />
+          <div class="bg-tooltip">我的房间，但是没有电脑和其他电子设备可用</div>
         </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-calculator.webp"
-            alt="Calculator"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>计算机形计算器</h3>
-            <h6>Computer-Shaped Calculator</h6>
-            <p>While playing, I often pretended this is a real computer</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-candy.webp"
-            alt="Candy"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>长条和可乐套餐糖</h3>
-            <h6>Playful Candy</h6>
-            <p>The long strips change flavor with the color; the candy in the meal set always gets dirty from playing, but I would still wipe the dust off and eat it</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-clock.webp"
-            alt="Clock"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>HelloKitty闹钟</h3>
-            <h6>HelloKitty Clock</h6>
-            <p>Every morning, It would loudly yell, 'Get up, you lazy pig,' but in the only things that could really wake me up were my mother and the English cassette tapes being played</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-colorpen.webp"
-            alt="Color Pens"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>菠萝王子牌彩笔</h3>
-            <h6>PineapplePrince Colorpen</h6>
-            <p>Loved the stamp at the end of the pen the most, and I'm most afraid of running out of ink</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-colorrefill.webp"
-            alt="Color Refills"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>彩笔墨水补充液</h3>
-            <h6>Colorpen Inkrefills</h6>
-            <p>Each time I used them, the pens hardly absorbed any ink, but it always ended up getting inks all over my hands</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-conanbakerstr.webp"
-            alt="Conan Baker Street"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>贝克街的亡灵</h3>
-            <h6>Detective Conan:The Phantom of Baker Street</h6>
-            <p>My favorite of all Conan movies. Bought at the newsstand acroos from the home to trick me into drinking my whole bowl of awful tasting herbal medicine</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-conanbooks.webp"
-            alt="Conan Books"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>名侦探柯南漫画</h3>
-            <h6>Detective Conan Comic</h6>
-            <p>The special thick volume that compiled al the Black Organization chapters was the best</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-eraser.webp"
-            alt="Eraser"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>橡皮</h3>
-            <h6>Eraser</h6>
-            <p>I have loads of erasers, and stationery is the best, and most reasonable "toy" 😈</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-fishingtoy.webp"
-            alt="Fishing Toy"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>钓鱼玩具</h3>
-            <h6>Fishing Toy</h6>
-            <p>The plastic fish is attracted by magnets, so it's not a guaranteed hit each time</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-hualushui.webp"
-            alt="Hualu Shui"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>驱蚊止痒三件套</h3>
-            <h6>Mosquito Repellent Trio</h6>
-            <p>Besides relieving the itchiness by pinching a cross on the spot, these products also work fine, leaving a lasting scent</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-huamao.webp"
-            alt="Huamao"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>花猫侦探</h3>
-            <h6>Detective Cat(Look and Find Picture Book)</h6>
-            <p>One of my favorite series of find-and-search picture books</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-kfcconsole.webp"
-            alt="KFC Console"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>KFC上校游戏机</h3>
-            <h6>KFC Colonel Sanders Game Console</h6>
-            <p>I LOVE playing tetris with this, but lost it after the move. Althoug it had loads of small games, I only like playing...maybe...five of them?</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-lotion.webp"
-            alt="Lotion"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>劳动护肤霜</h3>
-            <h6>Workers Lotion</h6>
-            <p>I often used this when stayed overnight at my 姥姥/grandma's house. Every morning, after washing my face, I applied this as facial cream; it smelled nice and wasn't greasy at all</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-med.webp"
-            alt="Medicine Box"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>葡萄糖酸锌口服液（儿童版）</h3>
-            <h6>Zinc Gluconate Oral Solution</h6>
-            <p>I used to not like to eat (therefore I didn't grow tall obviously). Although it was medicine, it tasted like a delicious beverage</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-mole2.webp"
-            alt="Mole 2"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>鼹鼠的故事</h3>
-            <h6>The Little Mole</h6>
-            <p>The mole, the mouse, and the bunny with big ears are all lovely 🥹🥹</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-pokefind.webp"
-            alt="Pokémon Finder"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>《宝可梦大搜素》</h3>
-            <h6>Let's Find Pokémon</h6>
-            <p>Another search-and-find picture book. I used to get too addicted to Pokemon and everything related to it</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-shoe.webp"
-            alt="Shoe"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>跳操小白鞋</h3>
-            <h6>White shoes for aerobics</h6>
-            <p>Every time I wore a new pair of white shoes, there would inevitably be somebody who stepped on them; It felt like an inescapable curse...</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-shuihaizi.webp"
-            alt="Shui Haizi"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>《水孩子》</h3>
-            <h6>The Water-Babies</h6>
-            <p>My parents bought this book for me over some random weekend at Meitehao Supermarket</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-sticker.webp"
-            alt="Sticker Sheet"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>换衣贴纸</h3>
-            <h6>Dress-up Stickers</h6>
-            <p>I like to take the clothes stickers and then put them above the body of the doll, but I always stick lightly, so that I can play next time still...</p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-talesbook.webp"
-            alt="Tales Book"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>影响中国孩子的100个经典童话</h3>
-            <h6>100 Classic Fairy Tales Influencing Chinese Children</h6>
-            <p>Even though the book was thick, I still put it under my pillow, and I knew my favorite role model Pippi Longstocking from this book</p>
-          </div>
-        </div>      
-        
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-xuanfeng.webp"
-            alt="Xuanfeng"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>冲锋战神</h3>
-            <h6>Magnum Saber From Let's & Go</h6>
-            <p>I loved repeating the lines from the anime. I once got the same-looking Mini 4WD as the character Xiaohao does. I brought it out to play after a rainy day, and it was too dark to see; therefore, mine was driven straight to a water puddle and went wasted    </p>
-          </div>
-        </div>
-
-        <div class="object-card">
-          <img
-            src="../decoimg/droom-xhd1.webp"
-            alt="XHD 1"
-            draggable="true"
-            crossorigin="anonymous"
-          />
-          <div class="object-info">
-            <h3>冒险小虎队</h3>
-            <h6>Book:A Case for You and the Tiger-Team</h6>
-            <p>As a kid, I always wonder how the detective card worked inside 🧐</p>
-          </div>
-        </div>
+        <div class="bg-thumb-wrapper">
+          <img src="./decoimg/droom-bg2.png" alt="Room 2" onclick="changeRoomBg(2)" />
+          <div class="bg-tooltip">爸爸妈妈的房间，有对着杂志的电脑桌和暖洋洋的阳台</div>
         </div>
       </div>
-      <!-- end of .sidebar-content -->
-    </div>
-    <!-- end of .sidebar -->
 
-    <!-- Screenshot Preview Modal -->
-    <div id="photoModal" class="photo-modal">
-      <div class="photo-content">
-        <img id="photoPreview" src="" alt="Screenshot Preview" />
-        <div class="photo-buttons">
-          <button id="downloadBtn">📥 Download Photo</button>
-          <button id="continueBtn">🎨 Keep Decorating</button>
+      <a href="index.html" class="back-btn"> ← Back to Desktop</a>
+
+      <!-- Object Sidebar Drawer -->
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-blockingtoy.png"
+              alt="Blocking Toy"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>木质积木</h3>
+              <!-- <h6>Blocking Toy</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-calculator.png"
+              alt="Calculator"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>计算机形计算器</h3>
+              <!-- <h6>Computer-Shaped Calculator</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-candy.png"
+              alt="Candy"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>长条和可乐套餐糖</h3>
+              <!-- <h6>Playful Candy</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-clock.png"
+              alt="Clock"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>HelloKitty闹钟</h3>
+              <!-- <h6>HelloKitty Clock</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-colorpen.png"
+              alt="Color Pens"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>菠萝王子牌彩笔</h3>
+              <!-- <h6>PineapplePrince Colorpen</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-colorrefill.png"
+              alt="Color Refills"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>彩笔墨水补充液</h3>
+              <!-- <h6>Colorpen Inkrefills</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-conanbakerstr.png"
+              alt="Conan Baker Street"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>贝克街的亡灵</h3>
+              <!-- <h6>Detective Conan:The Phantom of Baker Street</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-conanbooks.png"
+              alt="Conan Books"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>名侦探柯南漫画</h3>
+              <!-- <h6>Detective Conan Comic</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-eraser.png"
+              alt="Eraser"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>橡皮</h3>
+              <!-- <h6>Eraser</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-fishingtoy.png"
+              alt="Fishing Toy"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>钓鱼玩具</h3>
+              <!-- <h6>Fishing Toy</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-hualushui.png"
+              alt="Hualu Shui"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>驱蚊止痒三件套</h3>
+              <!-- <h6>Mosquito Repellent Trio</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-huamao.png"
+              alt="Huamao"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>花猫侦探</h3>
+              <!-- <h6>Detective Cat(Look and Find Picture Book)</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-kfcconsole.png"
+              alt="KFC Console"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>KFC上校游戏机</h3>
+              <!-- <h6>KFC Colonel Sanders Game Console</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-lotion.png"
+              alt="Lotion"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>劳动护肤霜</h3>
+              <!-- <h6>Workers Lotion</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-med.png"
+              alt="Medicine Box"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>葡萄糖酸锌口服液（儿童版）</h3>
+              <!-- <h6>Zinc Gluconate Oral Solution</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-mole2.png"
+              alt="Mole 2"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>鼹鼠的故事</h3>
+              <!-- <h6>The Little Mole</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-pokefind.png"
+              alt="Pokémon Finder"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>《宝可梦大搜素》</h3>
+              <!-- <h6>Let's Find Pokémon</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-shoe.png"
+              alt="Shoe"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>跳操小白鞋</h3>
+              <!-- <h6>White shoes for aerobics</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-shuihaizi.png"
+              alt="Shui Haizi"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>《水孩子》</h3>
+              <!-- <h6>The Water-Babies</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-sticker.png"
+              alt="Sticker Sheet"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>换衣贴纸</h3>
+              <!-- <h6>Dress-up Stickers</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-talesbook.png"
+              alt="Tales Book"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>影响中国孩子的100个经典童话</h3>
+              <!-- <h6>100 Classic Fairy Tales Influencing Chinese Children</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-xuanfeng.png"
+              alt="Xuanfeng"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>冲锋战神</h3>
+              <!-- <h6>Magnum Saber From Let's & Go</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-xhd1.png"
+              alt="XHD 1"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>冒险小虎队</h3>
+              <!-- <h6>Book:A Case for You and the Tiger-Team</h6> -->
+            </div>
+          </div>
+        </div>
+        <!-- end of .sidebar-content -->
+      </div>
+      <!-- end of .sidebar -->
+
+      <!-- Screenshot Preview Modal -->
+      <div id="photoModal" class="photo-modal">
+        <div class="photo-content">
+          <img id="photoPreview" src="" alt="Screenshot Preview" />
+          <div class="photo-buttons">
+            <button id="downloadBtn">📥 Download Photo</button>
+            <button id="continueBtn">🎨 Keep Decorating</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- QR Code Modal -->
-    <div id="qrOverlay">
-      <div id="qrModal">
-        <h3>Now the room stays with you forever</h3>
-        <div id="qrcode"></div>
-        <button onclick="closeQR()">Close</button>
+      <!-- QR Code Modal -->
+      <div id="qrOverlay">
+        <div id="qrModal">
+          <h3>Now the room stays with you forever</h3>
+          <div id="qrcode"></div>
+          <button onclick="closeQR()">Close</button>
+        </div>
       </div>
-    </div>
 
-     <!-- About Panel -->
-    <div id="aboutPanel" class="about-panel">
-      <div class="about-content">
-        <p >Welcome to my home! I'm turning 11 next year, and these are so far my most favorite rooms in the world</p>
-        <p >I wish this could also be your place, where you don't have to worry about ticking clocks, messy rooms, or anything other than happiness.</p>
-        <p style="text-align: center;">Come, and let's rearrange together!</p>
+      <!-- About Panel -->
+      <div id="aboutPanel" class="about-panel">
+        <div class="about-content">
+          <p>欢迎来到我在”装饰房间2005“中的房间们！</p>
+          <p>希望你在这里，不需要担心叫早的闹钟和妈妈的唠叨（哪怕房间杂乱无章）</p>
+          <p style="text-align: center">来吧，让我们一起悠闲地在房间里玩吧！</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Instruction Panel -->
-    <div id="instructionPanel" class="instruction-panel">
-      <div class="instruction-content">
-        <h3>😋 I had been waiting for us to do this together 🏠</h3>
-        <ul>
-          <li>🫱🏼 Drag items from the "Objects" sidebar</li>
-          <li>🫳🏼 Resize with the corner handle</li>
-          <li>↵ Delete selected object</li>
-          <li>📸 Take a picture (left sidebar) and save our memory 🌺</li>
-           <!-- <li>🧭 Generate QR code to save your room</li>-->
-        </ul>
+      <!-- Instruction Panel -->
+      <div id="instructionPanel" class="instruction-panel">
+        <div class="instruction-content">
+          <h3>😋 我期待了很久，和你一起装饰这里🏠</h3>
+          <ul>
+            <li>🫱🏼 打开物品栏，拖动物品到房间</li>
+            <li>🫳🏼 拖动右下角调整物品大小</li>
+            <li>↵ 用删除键删除物品</li>
+            <li>📸 别忘记点击左侧的拍照键，留下我们美好的回忆 🌺</li>
+            <!-- <li>🧭 Generate QR code to save your room</li>-->
+          </ul>
+        </div>
       </div>
+
+      <!-- Flash overlay -->
+      <div id="flash-overlay"></div>
+
+      <div id="room" class="room"></div>
+
+      <audio id="camera-sound" src="./decoimg/camera-click-01-36277.mp3" preload="auto"></audio>
     </div>
-
-    <!-- Flash overlay -->
-    <div id="flash-overlay"></div>
-
-    <div id="room" class="room"></div>
-
-    <audio
-      id="camera-sound"
-      src="../decoimg/camera-click-01-36277.mp3"
-      preload="auto"
-    ></audio>
-
+    <!-- /#app -->
     <!--  External JS -->
     <script src="webroom.js"></script>
   </body>
