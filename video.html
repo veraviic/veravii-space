@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: black;
+        height: 100vh;
+        margin: 0;
+        position: relative;
+        display: flex; /* enable flexbox */
+        justify-content: center; /* center horizontally */
+        align-items: center; /* center vertically */
+        gap: 90px; /* space between the squares */
+      }
+
+      .button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: rgb(65, 65, 65);
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 20px;
+        text-decoration: none; /* remove underline for link */
+        display: inline-block;
+      }
+
+      .button:hover {
+        background-color: rgb(255, 255, 255);
+      }
+
+      .square {
+        width: 467px;
+        height: 350px;
+        background-color: rgb(187, 187, 187);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="index.html" class="button">Back</a>
+
+    <div class="square"></div>
+    <div class="square"></div>
+  </body>
+</html>

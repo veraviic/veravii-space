@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CleanupYourRoom</title>
+    <link rel="stylesheet" href="clean.css" />
+    <script defer src="clean.js"></script>
+  </head>
+
+  <body>
+    <h1>“妈妈说了，要赶快帮我打包东西！”</h1>
+    <h3 class="blinking">"Mama said, we need to hurry up and pack!"</h3>
+
+    <div id="countdown-container">
+      Time left: <span id="countdown">5</span> seconds
+    </div>
+
+    <div id="items-container">
+      <img
+        src="cleanroom/cl-bag.png"
+        class="draggable-item"
+        data-name="Bag"
+        draggable="true"
+        data-description="Mama bought me this along with the kid happy meal"
+      />
+      <img
+        src="cleanroom/cl-booktales.png"
+        class="draggable-item"
+        data-name="Book Tales"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-clock.png"
+        class="draggable-item"
+        data-name="Color Box"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-toyblock.jpeg"
+        class="draggable-item"
+        data-name="Toy Block"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-kfcgameconsole.png"
+        class="draggable-item"
+        data-name="Game Console"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-inkrefill.png"
+        class="draggable-item"
+        data-name="Ink Refill"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-xhd-1.jpeg"
+        class="draggable-item"
+        data-name="Ink Refill"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-xhd-2.jpeg"
+        class="draggable-item"
+        data-name="Ink Refill"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-xhd-3.PNG"
+        class="draggable-item"
+        data-name="Ink Refill"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-med.png"
+        class="draggable-item"
+        data-name="Ink Refill"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-sticker.png"
+        class="draggable-item"
+        data-name="Ink Refill"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-fishingtoy.png"
+        class="draggable-item"
+        data-name="Ink Refill"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-xp.png"
+        class="draggable-item"
+        data-name="Ink Refill"
+        draggable="true"
+      />
+      <img
+        src="cleanroom/cl-ys.webp"
+        class="draggable-item"
+        data-name="Ink Refill"
+        draggable="true"
+      />
+    </div>
+
+    <ul id="packed-items-list"></ul>
+
+    <div id="popup-modal" class="hidden">
+      <div class="popup-content">
+        <h2>⏱️ Time's up!</h2>
+        <p id="final-score-text"></p>
+        <ul id="popup-packed-items-list"></ul>
+        <button onclick="stayOnPage()">🔍 Stay Here</button>
+        <button onclick="goToWebroom()">🚪 Go to decorate our new room</button>
+      </div>
+    </div>
+
+    <audio id="bgm" src="cleanroom/cl-AC-Chill.mp3" loop autoplay></audio>
+
+    <button id="music-toggle" style="display: none">🔊 Mute Music</button>
+
+    <div class="bottom">
+      <img id="drop-zone" class="Box" src="cleanroom/box.png" />
+    </div>
+  </body>
+</html>
