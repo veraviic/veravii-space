@@ -121,6 +121,14 @@ body::before {
     4px 4px 6px rgba(0, 0, 0, 0.55);
 }
 
+#photo-icon .icon-label {
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: rgba(10, 36, 106, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
 .icon-wrapper.icon-disabled .icon {
   filter: grayscale(1) brightness(0.75);
   opacity: 0.65;
@@ -877,6 +885,19 @@ body::before {
   color: #000;
 }
 
+/* disable overlay so gradient stays behind image */
+#photo-window .gallery-preview::before {
+  content: none;
+}
+
+#photo-window .gallery-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 0;
+}
+
 /* Photo/Explorer window specific styles */
 #photo-window .content-area {
   display: flex;
@@ -1341,6 +1362,46 @@ body::before {
   color: #999;
 }
 
+/* Readability tuning for Chinese UI text inside photo window */
+#photo-window,
+#photo-window * {
+  -webkit-font-smoothing: antialiased;
+  font-smooth: auto;
+  text-shadow: none;
+}
+
+#photo-window .explorer-menubar,
+#photo-window .menu-item,
+#photo-window .description-content,
+#photo-window .desc-value,
+#photo-window .desc-custom-textarea {
+  font-family: Tahoma, "Microsoft YaHei", SimSun, Arial, sans-serif;
+}
+
+#photo-window .menu-item {
+  color: #2a2a2a;
+  font-size: 12px;
+}
+
+#photo-window .description-content {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #111;
+}
+
+#photo-window .desc-label {
+  color: #0a246a;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+#photo-window .desc-value,
+#photo-window .desc-custom-textarea {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #111;
+}
+
 /* Scrollbar styling for webkit browsers */
 #photo-window .gallery-thumbnails::-webkit-scrollbar {
   height: 12px;
@@ -1415,4 +1476,31 @@ body::before {
   background: transparent;
   pointer-events: auto;
   display: none;
+}
+
+#photo-window .gallery-preview {
+  position: relative;
+  background-color: #dfe5f0 !important;
+  background-image: linear-gradient(
+    to bottom,
+    #bbcbe6 0%,
+    #9dafd0 38%,
+    #90a6cd 72%,
+    #6483a8 100%
+  ) !important;
+  background-repeat: no-repeat;
+}
+
+#photo-icon .icon-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+}
+
+/* keep tooltip behavior from .explain, but no base box on label */
+#photo-icon .icon-label.explain {
+  backdrop-filter: none !important;
 }
