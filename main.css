@@ -121,14 +121,6 @@ body::before {
     4px 4px 6px rgba(0, 0, 0, 0.55);
 }
 
-#photo-icon .icon-label {
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 2px;
-  background: rgba(10, 36, 106, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-}
-
 .icon-wrapper.icon-disabled .icon {
   filter: grayscale(1) brightness(0.75);
   opacity: 0.65;
@@ -1489,20 +1481,6 @@ body::before {
     #6483a8 100%
   ) !important;
   background-repeat: no-repeat;
-}
-
-#photo-icon .icon-label {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  color: #fff;
-  text-shadow: 1px 1px 0 #000;
-}
-
-/* keep tooltip behavior from .explain, but no base box on label */
-#photo-icon .icon-label.explain {
-  backdrop-filter: none !important;
 }
 
 #photo-window .explorer-menubar .menu-item {
