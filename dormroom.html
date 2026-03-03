@@ -17,14 +17,14 @@
       }
 
       body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: fixed;
+        inset: 0;
       }
 
       #unity-canvas {
         display: block;
         background: #231f20;
+        touch-action: none;
       }
     </style>
   </head>
@@ -34,10 +34,31 @@
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
+      function getViewportSize() {
+        var viewport = window.visualViewport;
+        return {
+          width: Math.round(viewport ? viewport.width : window.innerWidth),
+          height: Math.round(viewport ? viewport.height : window.innerHeight),
+        };
+      }
+
+      function isMobileLayout() {
+        return window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 1024;
+      }
+
       function resizeCanvasToViewport() {
-        var viewportWidth = window.innerWidth;
-        var viewportHeight = window.innerHeight;
+        var viewportSize = getViewportSize();
+        var viewportWidth = viewportSize.width;
+        var viewportHeight = viewportSize.height;
         var targetAspect = 16 / 9;
+
+        if (isMobileLayout()) {
+          canvas.style.width = viewportWidth + "px";
+          canvas.style.height = viewportHeight + "px";
+          canvas.style.maxWidth = "100vw";
+          canvas.style.maxHeight = "100vh";
+          return;
+        }
 
         var fittedWidth = viewportWidth;
         var fittedHeight = viewportWidth / targetAspect;
@@ -51,23 +72,19 @@
         canvas.style.height = `${Math.round(fittedHeight)}px`;
       }
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      if (isMobileLayout()) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement("meta");
         meta.name = "viewport";
         meta.content =
           "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes";
         document.getElementsByTagName("head")[0].appendChild(meta);
+      }
 
-        canvas.style.width = "100vw";
-        canvas.style.height = "100vh";
-        canvas.style.maxWidth = "100vw";
-        canvas.style.maxHeight = "100vh";
-
-        document.body.style.textAlign = "left";
-      } else {
-        resizeCanvasToViewport();
-        window.addEventListener("resize", resizeCanvasToViewport);
+      resizeCanvasToViewport();
+      window.addEventListener("resize", resizeCanvasToViewport);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", resizeCanvasToViewport);
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
