@@ -1504,3 +1504,7 @@ body::before {
 #photo-icon .icon-label.explain {
   backdrop-filter: none !important;
 }
+
+#photo-window .explorer-menubar .menu-item {
+  color: #8f8f8fc0 !important;
+}
