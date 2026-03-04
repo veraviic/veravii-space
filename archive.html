@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archive Room</title>
+    <link rel="stylesheet" href="archive.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"
+    ></script>
+  </head>
+
+  <body>
+    <button
+      id="sidebarToggle"
+      class="sidebar-toggle"
+      type="button"
+      aria-label="Toggle archive menu"
+      title="Archive Menu"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span class="sidebar-toggle-label">Archive Menu</span>
+    </button>
+
+    <aside id="archiveSidebar" class="archive-sidebar" aria-label="Archive categories">
+      <div class="archive-sidebar-header">
+        <h2>Archive Menu</h2>
+        <button
+          id="sidebarClose"
+          class="sidebar-close"
+          type="button"
+          aria-label="Close archive menu"
+        >
+          ×
+        </button>
+      </div>
+
+      <section class="archive-switch">
+        <button class="titlebutton sidebar-item" data-mode="about">• About This Archive</button>
+
+        <button class="titlebutton sidebar-item" data-mode="docs">• Documentations</button>
+
+        <button
+          class="titlebutton sidebar-item"
+          data-mode="dataviz"
+          data-tooltip="Generated based on the documentations and their tabs"
+        >
+          • Data Visualizations
+        </button>
+
+        <button
+          class="sidebar-item sidebar-item--back"
+          onclick="window.location.href = 'index.html'"
+          type="button"
+        >
+          • Back to Main Page
+        </button>
+      </section>
+    </aside>
+
+    <div class="archive-main">
+      <header class="page-header">
+        <h1>The Folded Archive</h1>
+        <p class="subtitle">Objects · Writings · Reflections</p>
+        <p class="concept-text">* The current, for the past, for the future *</p>
+      </header>
+
+      <!-- ========== ABOUT THIS ARCHIVE (NEW SECTION) ========== -->
+      <section class="archive-section archive-section--about">
+        <div class="section-arrow"></div>
+        <div class="about-wrapper">
+          <p class="about-text">
+            This archiving page is documentation, including pics/journaling/scans/video, since the
+            beginning of living in Calgary. They are traces of how my living spaces evolved over
+            time, and how my thoughts about what rooms, houses, and even home mean at different
+            stages throughout years 2024-2026.
+          </p>
+
+          <blockquote></blockquote>
+        </div>
+      </section>
+
+      <!-- ========== DOCUMENTATIONS SECTION (DEFAULT ACTIVE) ========== -->
+      <section
+        class="docs-section archive-section archive-section--docs active"
+        data-section="docs"
+      >
+        <div class="section-arrow"></div>
+
+        <nav class="subtabs subtabs--docs">
+          <button class="tab active" data-filter="all">All</button>
+          <button class="tab" data-filter="usedobjects">Used Objects</button>
+          <button class="tab" data-filter="perhaps">Perhaps?</button>
+          <button class="tab" data-filter="inhome">Taken-In-Home</button>
+          <button class="tab" data-filter="rooms">Rooms</button>
+          <button class="tab" data-filter="outside">Taken-Outside</button>
+          <button class="tab" data-filter="writing">Writing</button>
+          <button class="tab" data-filter="scans">Scans</button>
+        </nav>
+
+        <main class="grid">
+          <!-- cards remain unchanged -->
+          <article class="card" data-tags="inhome,rooms,writing">
+            <a href="posts/rooma_20240824.html" class="card-link">
+              <div
+                class="thumb"
+                style="background-image: url(&quot;archimg/arch_rooma_20240824.jpeg&quot;)"
+              ></div>
+              <div class="info">
+                <h2>Room A: Apartment—How it started</h2>
+                <p class="meta">Aug 2024 · Rooms/TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card" data-tags="inhome,rooms,writing">
+            <a href="posts/rooma_20240825_desktopupdate.html" class="card-link">
+              <div
+                class="thumb"
+                style="
+                  background-image: url(&quot;archimg/arch_rooma_20240825_desktopupdate.jpg&quot;);
+                "
+              ></div>
+              <div class="info">
+                <h2>Desktop Setup</h2>
+                <p class="meta">Aug 2024 · Rooms/TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card no-tape maybe" data-tags="outside,perhaps">
+            <div
+              class="thumb"
+              data-images="archimg/arch_out_20240823.JPG"
+              style="background-image: url(&quot;archimg/arch_out_20240823.JPG&quot;)"
+            >
+              <div class="thumb-hover-text">
+                Spent 15+ mins to choose but still didn't bring it home with me
+              </div>
+            </div>
+
+            <div class="info">
+              <h2>💬 The Rabbit I Almost Became Friends With</h2>
+              <p class="meta">Aug 2024 · Perhaps?/TO</p>
+            </div>
+          </article>
+
+          <article class="card" data-tags="inhome,rooms,writing">
+            <a href="posts/rooma_20240829.html" class="card-link">
+              <div
+                class="thumb"
+                style="background-image: url(&quot;archimg/arch_rooma_20240829.jpeg&quot;)"
+              ></div>
+              <div class="info">
+                <h2>Room Layout Updated</h2>
+                <p class="meta">Aug 2024 · Rooms/TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card no-tape" data-tags="inhome,rooms,usedobjects">
+            <div
+              class="thumb"
+              style="background-image: url(&quot;archimg/arch_rooma_20240901_ikeacarpet.JPG&quot;)"
+            >
+              <div class="thumb-hover-text">Cute Carpet on sale bought at Ikea</div>
+            </div>
+
+            <div class="info">
+              <h2>Carpet</h2>
+              <p class="meta">Sep 2024 · Used Objects/Rooms/TIH</p>
+            </div>
+          </article>
+
+          <article class="card" data-tags="inhome,rooms,writing">
+            <a href="posts/rooma_20240926.html" class="card-link">
+              <div
+                class="thumb"
+                style="background-image: url(&quot;archimg/arch_rooma_20240926.JPG&quot;)"
+              ></div>
+              <div class="info">
+                <h2>Desktop Updated</h2>
+                <p class="meta">Sep 2024 · Rooms/TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card" data-tags="usedobjects,scans">
+            <a href="posts/scan_knob.html" class="card-link">
+              <div class="thumb model-thumb">
+                <model-viewer
+                  src="archimg/arch_potlid.glb"
+                  auto-rotate
+                  rotation-per-second="35deg"
+                  disable-pan
+                  interaction-prompt="none"
+                  environment-image="neutral"
+                  exposure="1.05"
+                  shadow-intensity="0.3"
+                  shadow-softness="0.3"
+                  camera-orbit="0deg 75deg 150%"
+                  field-of-view="20deg"
+                  style="width: 100%; height: 180px; background: #aeb6ca"
+                ></model-viewer>
+              </div>
+
+              <div class="info">
+                <h2>Scan:Pot Lid Knob</h2>
+                <p class="meta">Nov 2024 · Used Objects/Scans</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card no-tape maybe" data-tags="perhaps,outside">
+            <div
+              class="thumb"
+              data-images="archimg/arch_out_20250105.jpeg"
+              style="
+                background-image: url(&quot;archimg/arch_out_20250105.jpeg&quot;);
+                background-size: 125%;
+                background-position: -49px -75px;
+              "
+            >
+              <div class="thumb-hover-text">
+                I wished this could always be the view outside of my living room
+              </div>
+            </div>
+
+            <div class="info">
+              <h2>💬 Sunset Outside of the Room</h2>
+              <p class="meta">Jan 2025 · Perhaps?/TO</p>
+            </div>
+          </article>
+
+          <article class="card" data-tags="inhome,usedobjects,writing">
+            <a href="posts/rooma_20250121_lamp.html" class="card-link">
+              <div
+                class="thumb"
+                style="background-image: url(&quot;archimg/arch_rooma_20250121_lamp1.jpeg&quot;)"
+              ></div>
+              <div class="info">
+                <h2>Floor Lamp</h2>
+                <p class="meta">Jan 2025 · Used Objects/TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card no-tape" data-tags="perhaps,outside">
+            <div
+              class="thumb"
+              style="
+                background-image: url(&quot;archimg/arch_out_20250123.jpeg&quot;);
+                background-size: 125%;
+                background-position: left -49px top -75px;
+              "
+            >
+              <div class="thumb-hover-text">
+                When it is not working for the switches, it looks even more interesting by itself
+              </div>
+            </div>
+            <div class="info">
+              <h2>Wall Plates Standed on the Mailboxes</h2>
+              <p class="meta">Jan 2025 · Perhaps?/TO</p>
+            </div>
+          </article>
+
+          <article class="card" data-tags="inhome,writing">
+            <a href="posts/rooma_20250129_chicken.html" class="card-link">
+              <div
+                class="thumb"
+                style="
+                  background-image: url(&quot;archimg/arch_20250129_chicken.jpeg&quot;);
+                  background-size: cover;
+                  background-position: center -40px;
+                "
+              ></div>
+              <div class="info">
+                <h2>Little Chicken/小鸡</h2>
+                <p class="meta">Jan 2025 · TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card no-tape" data-tags="inhome,usedobjects">
+            <div
+              class="thumb"
+              style="background-image: url(&quot;archimg/arch-20250129_canopener.JPG&quot;)"
+            >
+              <div class="thumb-hover-text">
+                Bought at dollar store— since then, I've been buying more and more can foods 😂
+              </div>
+            </div>
+            <div class="info">
+              <h2>Can Opener</h2>
+              <p class="meta">Jan 2025 · Used Objects/TIH</p>
+            </div>
+          </article>
+
+          <article class="card no-tape maybe" data-tags="perhaps,outside">
+            <div
+              class="thumb"
+              data-images="archimg/p_20250129.jpeg,archimg/p_202501292.jpeg"
+              style="background-image: url(&quot;archimg/p_20250129.jpeg&quot;)"
+            >
+              <div class="thumb-hover-text">
+                Chairs in the hallway of the 1st floor besides the woodshop
+              </div>
+            </div>
+
+            <div class="info">
+              <h2>💬 Chair for Open Balcony?</h2>
+              <p class="meta">Jan 2025 · Perhaps?/TO</p>
+            </div>
+          </article>
+
+          <article class="card" data-tags="inhome,rooms,writing">
+            <a href="posts/rooma_20250201_bath.html" class="card-link">
+              <div
+                class="thumb"
+                style="
+                  background-image: url(&quot;archimg/arch_rooma_20250201_bath2.jpeg&quot;);
+                  background-size: cover;
+                  background-position: center -90px;
+                "
+              ></div>
+              <div class="info">
+                <h2>Taking a Bath</h2>
+                <p class="meta">Feb 2025 · Rooms/TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card" data-tags="inhome,rooms,usedobjects,writing">
+            <a href="posts/rooma_20250203_bedsheet.html" class="card-link">
+              <div
+                class="thumb"
+                style="
+                  background-image: url(&quot;archimg/arch_rooma_20250203_bedsheet2.jpeg&quot;);
+                  background-size: cover;
+                  background-position: center -90px;
+                "
+              ></div>
+              <div class="info">
+                <h2>Bedsheets & Smells</h2>
+                <p class="meta">Feb 2025 · Used Objects/Rooms/TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card no-tape maybe" data-tags="outside,perhaps">
+            <div
+              class="thumb"
+              data-images="archimg/p_20250203.jpeg"
+              style="
+                background-image: url(&quot;archimg/p_20250203.jpeg&quot;);
+                background-position: 0px 250px;
+              "
+            >
+              <div class="thumb-hover-text">
+                Imagine this the lock for my house, I would spend hours on unlocking...
+              </div>
+            </div>
+
+            <div class="info">
+              <h2>💬 Lock for Main Door</h2>
+              <p class="meta">Feb 2025 · Perhaps?/TO</p>
+            </div>
+          </article>
+
+          <article class="card no-tape maybe" data-tags="outside,perhaps">
+            <div
+              class="thumb"
+              data-images="archimg/p_20250204.jpg"
+              style="
+                background-image: url(&quot;archimg/p_20250204.jpg&quot;);
+                background-position: 0px -20px;
+              "
+            >
+              <div class="thumb-hover-text">
+                I always want a room for doing paintings, and this is the sink and faucet I dream of
+                🥰
+              </div>
+            </div>
+
+            <div class="info">
+              <h2>💬 Dreamed faucet for My Studio Room</h2>
+              <p class="meta">Feb 2025 · Perhaps?/TO</p>
+            </div>
+          </article>
+
+          <article class="card no-tape maybe" data-tags="perhaps,outside">
+            <div
+              class="thumb"
+              data-images="archimg/p_20250201.jpeg"
+              style="
+                background-image: url(&quot;archimg/p_20250201.jpeg&quot;);
+                background-position: center -50px;
+              "
+            >
+              <div class="thumb-hover-text">
+                This could be fun to put in the middle of the living room, where people are easily
+                bumped into 😈
+              </div>
+            </div>
+
+            <div class="info">
+              <h2>💬 A Sculpture for Living Room</h2>
+              <p class="meta">Feb 2025 · Perhaps?/TO</p>
+            </div>
+          </article>
+
+          <article class="card" data-tags="inhome,rooms,writing">
+            <a href="posts/rooma_20250315.html" class="card-link">
+              <div
+                class="thumb"
+                style="
+                  background-image: url(&quot;archimg/arch_rooma_20250315_2.jpeg&quot;);
+                  background-size: cover;
+                  background-position: center -50px;
+                "
+              ></div>
+              <div class="info">
+                <h2>Room A: About to Leave Early?</h2>
+                <p class="meta">March 2025 · Rooms/TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card" data-tags="inhome,writing">
+            <a href="posts/rooma_20250327_xiaohuang.html" class="card-link">
+              <div
+                class="thumb"
+                style="
+                  background-image: url(&quot;archimg/arch_rooma_20250327_xiaohuang1.jpeg&quot;);
+                  background-size: cover;
+                  background-position: center -50px;
+                "
+              ></div>
+              <div class="info">
+                <h2>Doggy/小黄</h2>
+                <p class="meta">March 2025 · TIH/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card no-tape" data-tags="inhome,usedobjects">
+            <div
+              class="thumb"
+              data-images="archimg/arch_rooma_20250330_hachimd.JPG, archimg/arch_rooma_20250330_hachimd1.JPG"
+              style="background-image: url(&quot;archimg/arch_rooma_20250330_hachimd.JPG&quot;)"
+            >
+              <div class="thumb-hover-text">
+                Bought at Incheon Airport — unfortunately, it was accidentally folded in my backpack
+                🥲
+              </div>
+            </div>
+            <div class="info">
+              <h2>Hachiware Mouse Pad</h2>
+              <p class="meta">March 2025 · Used Objects/TIH</p>
+            </div>
+          </article>
+
+          <article class="card no-tape" data-tags="inhome,usedobjects">
+            <div
+              class="thumb"
+              style="background-image: url(&quot;archimg/arch_rooma_20250330_collection.jpeg&quot;)"
+            >
+              <div class="thumb-hover-text">Hope they’re happy to stay with me as a family</div>
+            </div>
+            <div class="info">
+              <h2>Family Memembers</h2>
+              <p class="meta">March 2025 · Used Objects/TIH</p>
+            </div>
+          </article>
+
+          <article class="card no-tape has-model" data-tags="usedobjects,scans">
+            <div class="thumb model-thumb">
+              <model-viewer
+                src="archimg/arch_bowl.glb"
+                auto-rotate
+                rotation-per-second="30deg"
+                disable-pan
+                interaction-prompt="none"
+                environment-image="neutral"
+                exposure="0.8"
+                shadow-intensity="0.3"
+                shadow-softness="0.3"
+                camera-orbit="0deg 75deg 150%"
+                field-of-view="20deg"
+                style="width: 100%; height: 180px; background: #979797"
+              ></model-viewer>
+              <div class="thumb-hover-text">
+                Dropped the bowl while washing—the size of it was sooo perfect!
+              </div>
+            </div>
+
+            <div class="info">
+              <h2>Scan:Broken Bowl</h2>
+              <p class="meta">April 2025 · Used Objects/Scans</p>
+            </div>
+          </article>
+
+          <article class="card" data-tags="inhome,outside,rooms,writing">
+            <a href="posts/roomb_20250430_dormmoving.html" class="card-link">
+              <div
+                class="thumb"
+                style="
+                  background-image: url(&quot;archimg/arch_20250428.jpeg&quot;);
+                  background-size: cover;
+                "
+              ></div>
+              <div class="info">
+                <h2>Moving D Day</h2>
+                <p class="meta">April 2025 · Rooms/TIN/TO/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card" data-tags="inhome,rooms,writing">
+            <a href="posts/roomb_20250430_dormmoving2.html" class="card-link">
+              <div
+                class="thumb"
+                style="
+                  background-image: url(&quot;archimg/arch_roomb_20250428_2.jpeg&quot;);
+                  background-size: cover;
+                  background-position: center -50px;
+                "
+              ></div>
+              <div class="info">
+                <h2>Dorm Room</h2>
+                <p class="meta">April 2025 · Rooms/TIN/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card no-tape" data-tags="inhome,usedobjects">
+            <div
+              class="thumb"
+              style="background-image: url(&quot;archimg/arch_roomb_20250507_bowl.jpeg&quot;)"
+            >
+              <div class="thumb-hover-text">Love eating Lucky Charms with this one</div>
+            </div>
+            <div class="info">
+              <h2>Bought a Snoopy Bowl</h2>
+              <p class="meta">May 2025 · Used Objects/TIH</p>
+            </div>
+          </article>
+
+          <article class="card no-tape" data-tags="inhome,usedobjects">
+            <div
+              class="thumb"
+              style="background-image: url(&quot;archimg/arch_roomb_keenshoes.jpg&quot;)"
+            >
+              <div class="thumb-hover-text">
+                First time buying sandals from Keen, and both pairs are big-kid sizes 🥾 Love the
+                colors
+              </div>
+            </div>
+            <div class="info">
+              <h2>New Shoes</h2>
+              <p class="meta">May 2025 · Used Objects/TIH</p>
+            </div>
+          </article>
+
+          <article class="card" data-tags="inhome,writing">
+            <a href="posts/roomb_20250728_raining.html" class="card-link">
+              <div
+                class="thumb"
+                style="background-image: url(&quot;archimg/arch_roomb_20250728_1.jpeg&quot;)"
+              ></div>
+              <div class="info">
+                <h2>Raining Day after Mom's Visit</h2>
+                <p class="meta">July 2025 · TIN/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card" data-tags="inhome,rooms,writing">
+            <a href="posts/roomb_20250817_dormmoving.html" class="card-link">
+              <div
+                class="thumb"
+                style="background-image: url(&quot;archimg/arch_roomb_20250817_1.jpeg&quot;)"
+              ></div>
+              <div class="info">
+                <h2>Moving in the Building</h2>
+                <p class="meta">Aug 2025 · Rooms/TIN/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card" data-tags="inhome,rooms,writing">
+            <a href="posts/roomb_20250817_setup.html" class="card-link">
+              <div
+                class="thumb"
+                style="background-image: url(&quot;archimg/arch_roomc_20250817_1.jpeg&quot;)"
+              ></div>
+              <div class="info">
+                <h2>Set Up Again: My Room (hopefully) until the Graduation?</h2>
+                <p class="meta">Aug 2025 · Rooms/TIN/Writing</p>
+              </div>
+            </a>
+          </article>
+
+          <article class="card no-tape" data-tags="inhome,usedobjects">
+            <div
+              class="thumb"
+              style="
+                background-image: url(&quot;archimg/arch_roomc_20250818-blanket+cusion.jpg&quot;);
+              "
+            >
+              <div class="thumb-hover-text">
+                Both of them were on sale at Simons, and love their patterns 🦢 🌺
+              </div>
+            </div>
+            <div class="info">
+              <h2>Blanket & Cusion</h2>
+              <p class="meta">Aug 2025 · Used Objects/TIH</p>
+            </div>
+          </article>
+
+          <article class="card no-tape has-model" data-tags="usedobjects,scans">
+            <div class="thumb model-thumb">
+              <model-viewer
+                src="archimg/arch_deodorant.glb"
+                auto-rotate
+                rotation-per-second="30deg"
+                disable-pan
+                interaction-prompt="none"
+                environment-image="neutral"
+                exposure="1.05"
+                shadow-intensity="0.3"
+                shadow-softness="0.3"
+                camera-orbit="0deg 75deg 150%"
+                field-of-view="20deg"
+                style="width: 100%; height: 180px; background: #aeb6ca"
+                ><div class="thumb-hover-text">
+                  Bought a travel size, but it smelled too good not to get the full size.
+                </div></model-viewer
+              >
+            </div>
+
+            <div class="info">
+              <h2>Scan: Coconut & Vanilla Deodorant</h2>
+              <p class="meta">Nov 2025 · Used Objects/Scans</p>
+            </div>
+          </article>
+        </main>
+      </section>
+
+      <!-- ========== DATA VISUALIZATIONS SECTION ========== -->
+      <section class="data-section archive-section archive-section--dataviz" data-section="dataviz">
+        <div class="section-arrow"></div>
+
+        <nav class="subtabs subtabs--dataviz">
+          <button class="datatab active" data-viz="bar">Post Counts</button>
+          <button class="datatab" data-viz="pie">Pie</button>
+          <button class="datatab" data-viz="line">Waves</button>
+          <button class="datatab" data-viz="radar">Relations</button>
+        </nav>
+
+        <div class="dataviz-panel">
+          <canvas id="datavizCanvas"></canvas>
+          <p class="dataviz-note">Counts are generated from the Documentations and their tags</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== Image Modal Viewer ===== -->
+    <div id="imgModal" class="img-modal">
+      <div class="img-modal-inner">
+        <div class="img-frame">
+          <button class="img-nav img-nav--left" aria-label="Previous image"></button>
+
+          <img id="imgModalContent" class="img-modal-content" alt="" />
+
+          <button class="img-nav img-nav--right" aria-label="Next image"></button>
+        </div>
+      </div>
+
+      <div class="img-modal-ui">
+        <span id="imgModalCounter"></span>
+        <span class="img-modal-close">&times;</span>
+      </div>
+    </div>
+
+    <!-- ===== 3D MODEL MODAL (SEPARATE) ===== -->
+    <div id="modelModal" class="img-modal">
+      <div class="img-modal-inner model-wrapper">
+        <span class="img-modal-close">&times;</span>
+
+        <div class="model-box" style="background: #aeb6ca">
+          <model-viewer
+            id="modalModel"
+            auto-rotate
+            camera-controls
+            interaction-prompt="none"
+            environment-image="neutral"
+            exposure="1.1"
+            shadow-intensity="0.2"
+          ></model-viewer>
+        </div>
+      </div>
+    </div>
+    <script src="archive.js"></script>
+  </body>
+</html>
