@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- ✅ External CSS -->
+    <link rel="stylesheet" href="webroom.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <!--
+      Pop out window
+      <div id="pagePopup" class="popup-window">
+        <div class="popup-inner">
+          <span class="popup-close">✕</span>
+          <p>This Room</p>
+          <br />tap anywhere outside to close
+        </div>
+      </div>
+    -->
+
+      <!-- Interface Buttons -->
+
+      <button class="toggle" onclick="toggleSidebar()">Items</button>
+      <button class="about-btn" onclick="toggleAbout()">About the decorated rooms</button>
+      <button class="instruction-btn" onclick="toggleInstructions()">👻 Message</button>
+      <button class="screenshot-btn" onclick="downloadPic()">📸 Snap it！</button>
+
+      <!--  Room Background Selector -->
+      <div id="bgSelector">
+        <div class="bg-thumb-wrapper">
+          <img src="./decoimg/droom-bg1.png" alt="Room 1" onclick="changeRoomBg(1)" />
+          <div class="bg-tooltip">My room, but no digital devices available to use</div>
+        </div>
+        <div class="bg-thumb-wrapper">
+          <img src="./decoimg/droom-bg2.png" alt="Room 2" onclick="changeRoomBg(2)" />
+          <div class="bg-tooltip">Parents'room, with "their" computer station</div>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-btn"> ← Back to Desktop</a>
+
+      <!-- Object Sidebar Drawer -->
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-hualushui.png"
+              alt="Hualu Shui"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Mosquito Repellent Trio</h3>
+              <!-- <h6>Mosquito Repellent Trio</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-calculator.png"
+              alt="Calculator"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Computer-Shaped Calculator</h3>
+              <!-- <h6>Computer-Shaped Calculator</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-candy.png"
+              alt="Candy"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Playful Candy</h3>
+              <!-- <h6>Playful Candy</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-clock.png"
+              alt="Clock"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>HelloKitty Clock</h3>
+              <!-- <h6>HelloKitty Clock</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-colorpen.png"
+              alt="Color Pens"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>PineapplePrince Colorpen</h3>
+              <!-- <h6>PineapplePrince Colorpen</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-colorrefill.png"
+              alt="Color Refills"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Colorpen Inkrefills</h3>
+              <!-- <h6>Colorpen Inkrefills</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-conanbakerstr.png"
+              alt="Conan Baker Street"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Detective Conan:The Phantom of Baker Street</h3>
+              <!-- <h6>Detective Conan:The Phantom of Baker Street</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-conanbooks.png"
+              alt="Conan Books"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Detective Conan Comic</h3>
+              <!-- <h6>Detective Conan Comic</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-eraser.png"
+              alt="Eraser"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Eraser</h3>
+              <!-- <h6>Eraser</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-fishingtoy.png"
+              alt="Fishing Toy"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Fishing Toy</h3>
+              <!-- <h6>Fishing Toy</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-blockingtoy.png"
+              alt="Blocking Toy"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Blocking Toy</h3>
+              <!-- <h6>Blocking Toy</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-huamao.png"
+              alt="Huamao"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Detective Cat(Look and Find Picture Book)</h3>
+              <!-- <h6>Detective Cat(Look and Find Picture Book)</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-kfcconsole.png"
+              alt="KFC Console"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>KFC Colonel Sanders Game Console</h3>
+              <!-- <h6>KFC Colonel Sanders Game Console</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-lotion.png"
+              alt="Lotion"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Workers Lotion</h3>
+              <!-- <h6>Workers Lotion</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-med.png"
+              alt="Medicine Box"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Zinc Gluconate Oral Solution</h3>
+              <!-- <h6>Zinc Gluconate Oral Solution</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-mole2.png"
+              alt="Mole 2"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>The Little Mole</h3>
+              <!-- <h6>The Little Mole</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-pokefind.png"
+              alt="Pokémon Finder"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Let's Find Pokémon</h3>
+              <!-- <h6>Let's Find Pokémon</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-shoe.png"
+              alt="Shoe"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>White shoes for aerobics</h3>
+              <!-- <h6>White shoes for aerobics</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-shuihaizi.png"
+              alt="Shui Haizi"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>The Water-Babies</h3>
+              <!-- <h6>The Water-Babies</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-sticker.png"
+              alt="Sticker Sheet"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Dress-up Stickers</h3>
+              <!-- <h6>Dress-up Stickers</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-talesbook.png"
+              alt="Tales Book"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>100 Classic Fairy Tales Influencing Chinese Children</h3>
+              <!-- <h6>100 Classic Fairy Tales Influencing Chinese Children</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-xuanfeng.png"
+              alt="Xuanfeng"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Magnum Saber From Let's & Go</h3>
+              <!-- <h6>Magnum Saber From Let's & Go</h6> -->
+            </div>
+          </div>
+
+          <div class="object-card">
+            <img
+              src="./decoimg/droom-xhd1.png"
+              alt="XHD 1"
+              draggable="true"
+              crossorigin="anonymous"
+            />
+            <div class="object-info">
+              <h3>Book:A Case for You and the Tiger-Team</h3>
+              <!-- <h6>Book:A Case for You and the Tiger-Team</h6> -->
+            </div>
+          </div>
+        </div>
+        <!-- end of .sidebar-content -->
+      </div>
+      <!-- end of .sidebar -->
+
+      <!-- Screenshot Preview Modal -->
+      <div id="photoModal" class="photo-modal">
+        <div class="photo-content">
+          <img id="photoPreview" src="" alt="Screenshot Preview" />
+          <div class="photo-buttons">
+            <button id="downloadBtn">📥 Download Photo</button>
+            <button id="continueBtn">🎨 Keep Decorating</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR Code Modal -->
+      <div id="qrOverlay">
+        <div id="qrModal">
+          <h3>Now the room stays with you forever</h3>
+          <div id="qrcode"></div>
+          <button onclick="closeQR()">Close</button>
+        </div>
+      </div>
+
+      <!-- About Panel -->
+      <div id="aboutPanel" class="about-panel">
+        <div class="about-content">
+          <p>Welcome to rooms in Decorating Rooms 2005！</p>
+          <p>
+            You don't have to worry about the alarm clock, or Mum nagging about our messy rooms.
+          </p>
+          <p style="text-align: center">Come, let's click-and-drag and have some fun here！</p>
+        </div>
+      </div>
+
+      <!-- Instruction Panel -->
+      <div id="instructionPanel" class="instruction-panel">
+        <div class="instruction-content">
+          <h3>😋 I've been looking forward to decorating this place with you for so long.🏠</h3>
+          <ul>
+            <li>🫱🏼 Open the item bar on the buttom of this window, and drag items into the room</li>
+            <li>🫳🏼 Click and drag the buttom right corner to resize</li>
+            <li>↵ Use delete key to delete items</li>
+            <li>
+              📸 Don't forget to click on the SNAP IT button on the left to capture our precious
+              moments 🌺
+            </li>
+            <!-- <li>🧭 Generate QR code to save your room</li>-->
+          </ul>
+        </div>
+      </div>
+
+      <!-- Flash overlay -->
+      <div id="flash-overlay"></div>
+
+      <div id="room" class="room"></div>
+
+      <audio id="camera-sound" src="./decoimg/camera-click-01-36277.mp3" preload="auto"></audio>
+    </div>
+    <!-- /#app -->
+    <!--  External JS -->
+    <script src="webroom.js"></script>
+  </body>
+</html>
